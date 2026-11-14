@@ -236,3 +236,55 @@ html, body { overflow-x: hidden; }
   #topTable .t th:nth-child(4), #topTable .t td:nth-child(4) { display: none; }
   .tq .v { font-size: 13px; }
 }
+
+/* ── 섹터별 종목 카드 ─────────────────────────────────── */
+.chip .pc { font-weight: 700; margin-left: 5px; font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.chip.on .pc { color: #fff; }
+.sblk { margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--line); scroll-margin-top: 110px; }
+.sblk:first-child { border-top: 0; margin-top: 4px; padding-top: 0; }
+.sblk-h { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.sblk-h h3 { font-size: 16px; font-weight: 800; letter-spacing: -.01em; display: flex; align-items: center; gap: 8px; }
+.sblk-h h3::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.sblk-h .med { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sblk-h .meta { font-size: 12px; color: var(--muted); }
+.sgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 10px; }
+.sc { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px 10px; cursor: pointer;
+  box-shadow: var(--shadow); min-width: 0; transition: border-color .12s, background .12s; }
+.sc:hover { background: var(--hover); border-color: var(--line-2); }
+.sc.best { border-color: var(--accent); }
+.sc-top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.sc-nm { font-size: 14px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sc-top .p { font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.sc-sub { font-size: 11px; color: var(--muted); margin-top: 1px; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sc svg { display: block; width: 100%; height: 40px; margin: 8px 0 6px; }
+.sc-px { font-size: 14.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sc-pe { font-size: 11.5px; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
+.sc-pe b { font-weight: 700; color: var(--ink-2); }
+.sc-pe b.hl { color: var(--accent); }
+.sc-pe i { font-style: normal; margin: 0 4px; color: var(--faint); }
+
+/* 모달 */
+.modal { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.55); display: none; align-items: center; justify-content: center; padding: 16px; }
+.modal.show { display: flex; }
+.modal-box { width: min(640px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--card); border: 1px solid var(--line-2);
+  border-radius: 14px; padding: 18px 20px 20px; box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+.m-h { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.m-h h3 { font-size: 18px; font-weight: 800; }
+.m-h .s { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.m-x { font-size: 18px; color: var(--muted); padding: 2px 6px; border-radius: 6px; }
+.m-x:hover { background: var(--hover); color: var(--ink); }
+.m-px { margin-top: 10px; font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.m-px span { font-size: 15px; margin-left: 8px; }
+.m-chart svg { width: 100%; height: 190px; display: block; margin: 10px 0 4px; }
+.m-axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+.m-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+.m-grid div { background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; }
+.m-grid .k { font-size: 11.5px; color: var(--muted); display: block; }
+.m-grid .v { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.m-link { display: inline-block; margin-top: 14px; font-size: 13px; color: var(--accent); font-weight: 600; }
+.m-link:hover { text-decoration: underline; }
+@media (max-width: 680px) {
+  .sgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .sc { padding: 10px 10px 9px; }
+  .m-grid { grid-template-columns: repeat(2, 1fr); }
+}

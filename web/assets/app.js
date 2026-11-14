@@ -187,6 +187,85 @@
       <span>52주 고점 대비${span(`<b>${pct(r.from_hi)}</b>`, r.from_hi)}</span></div>`;
   }
 
+  /* ── 섹터별 종목 카드 ──────────────────────────────── */
+  const ST = { uni: "kr", per: "1D" };
+  const ST_KEY = { "1D": "pct", "1W": "r1w", "1M": "r1m", "3M": "r3m", YTD: "ytd" };
+  const stData = () => (ST.uni === "kr" ? D.stocks_kr : D.stocks_global);
+  const fmtPx = (v, ccy) => (!isN(v) ? "–" : ccy === "KRW" ? Math.round(v).toLocaleString("en-US") : "$" + num(v, v >= 1000 ? 0 : 2));
+
+  function renderStocks() {
+    const d = stData();
+    const board = $("#stBoard");
+    if (d === undefined) return (board.innerHTML = `<div class="err">종목 데이터 불러오는 중…</div>`);
+    if (!d) { $("#stJump").innerHTML = ""; return (board.innerHTML = `<div class="err">종목 데이터를 불러오지 못했습니다.</div>`); }
+    const isKr = ST.uni === "kr";
+    $("#asof-stocks").innerHTML = (isKr ? `KRX ${d.date} 종가 기준 · WICS 중분류 · 업종별 시총 상위 최대 20종목`
+      : `미국 ${d.date} 종가 기준 · 미국 상장 대형주(ADR 포함) · 테마별 시총 상위 최대 20종목`) + staleBadge(isKr ? "stocks_kr" : "stocks_global");
+    const key = ST_KEY[ST.per];
+    const secs = d.sectors.slice().sort((a, b) => (isN(b.med[ST.per]) ? b.med[ST.per] : -1e9) - (isN(a.med[ST.per]) ? a.med[ST.per] : -1e9));
+    $("#stJump").innerHTML = secs.map((s, i) => `<button type="button" class="chip" data-j="${i}">${esc(s.name)}<span class="pc ${cls(s.med[ST.per])}">${pct(s.med[ST.per], 1)}</span></button>`).join("");
+    $("#stJump").onclick = (e) => {
+      const b = e.target.closest(".chip");
+      if (b) document.getElementById("sb-" + b.dataset.j).scrollIntoView({ behavior: "smooth" });
+    };
+    board.innerHTML = secs.map((s, i) => {
+      const rows = s.stocks.slice().sort((a, b) => (isN(b[key]) ? b[key] : -1e9) - (isN(a[key]) ? a[key] : -1e9));
+      const ups = rows.filter((r) => r[key] > 0).length, downs = rows.filter((r) => r[key] < 0).length;
+      return `<div class="sblk" id="sb-${i}">
+        <div class="sblk-h"><h3>${esc(s.name)}</h3><span class="med ${cls(s.med[ST.per])}">중앙값 ${pct(s.med[ST.per])}</span>
+          <span class="meta">강세 ${i + 1}위 · ${rows.length}종목 · 상승 ${ups} / 하락 ${downs}</span></div>
+        <div class="sgrid">${rows.map((r, j) => card(r, key, d.ccy, j === 0 && r[key] > 0, i, s.stocks.indexOf(r))).join("")}</div>
+      </div>`;
+    }).join("");
+    board.onclick = (e) => {
+      const c = e.target.closest(".sc");
+      if (c) openModal(secs[+c.dataset.s], secs[+c.dataset.s].stocks[+c.dataset.k], d.ccy);
+    };
+  }
+  function card(r, key, ccy, best, si, k) {
+    const isKr = ccy === "KRW";
+    const sub = isKr ? `${r.ticker} · 시총 ${r.rank}위` : `${r.ticker}${r.rank ? ` · 시총 ${r.rank}위` : ""}`;
+    const pe = isKr
+      ? `PER <b>${isN(r.per) ? r.per.toFixed(1) : "–"}</b><i>·</i>PBR <b>${isN(r.pbr) ? r.pbr.toFixed(2) : "–"}</b>`
+      : `올해 <b>${isN(r.pe0) ? r.pe0.toFixed(1) : "–"}</b><i>·</i>내년 <b class="hl">${isN(r.pe1) ? r.pe1.toFixed(1) : "–"}</b>`;
+    return `<div class="sc ${best ? "best" : ""}" data-s="${si}" data-k="${k}">
+      <div class="sc-top"><span class="sc-nm">${esc(r.name)}</span><span class="p ${cls(r[key])}">${pct(r[key])}</span></div>
+      <div class="sc-sub">${esc(sub)}</div>
+      ${spark((r.spark || []).slice(-60), 160, 40)}
+      <div class="sc-px">${fmtPx(r.last, ccy)}</div>
+      <div class="sc-pe">${pe}</div></div>`;
+  }
+
+  function openModal(sec, r, ccy) {
+    const isKr = ccy === "KRW";
+    const sp = r.spark || [];
+    const link = isKr ? `https://m.stock.naver.com/domestic/stock/${r.ticker}/total` : `https://finance.yahoo.com/quote/${encodeURIComponent(r.ticker)}`;
+    const cells = [["1일", r.pct], ["1주", r.r1w], ["1개월", r.r1m], ["3개월", r.r3m], ["YTD", r.ytd], ["52주 고점 대비", r.from_hi]];
+    const extra = isKr
+      ? [["시가총액", `${num(r.mcap, 1)}조`], ["PER", isN(r.per) ? r.per.toFixed(1) : "–"], ["PBR", isN(r.pbr) ? r.pbr.toFixed(2) : "–"]]
+      : [["시가총액", r.mcap ? `$${num(r.mcap / 1000, 2)}T` : "–"], ["올해 예상 PER", isN(r.pe0) ? r.pe0.toFixed(1) : "–"], ["내년 예상 PER", isN(r.pe1) ? r.pe1.toFixed(1) : "–"]];
+    const mn = sp.length ? Math.min(...sp) : null, mx = sp.length ? Math.max(...sp) : null;
+    $("#modalBox").innerHTML = `
+      <div class="m-h"><div><h3>${esc(r.name)}</h3><div class="s">${esc(r.ticker)} · ${esc(sec.name)}${r.rank ? ` · 시총 ${r.rank}위` : ""}</div></div>
+        <button type="button" class="m-x" id="mClose" aria-label="닫기">✕</button></div>
+      <div class="m-px">${fmtPx(r.last, ccy)}<span class="${cls(r.pct)}">${pct(r.pct)}</span></div>
+      <div class="m-chart">${spark(sp, 600, 190)}</div>
+      <div class="m-axis"><span>최근 ${sp.length}거래일</span><span>최저 ${fmtPx(mn, ccy)} · 최고 ${fmtPx(mx, ccy)}</span></div>
+      <div class="m-grid">${cells.map(([k, v]) => `<div><span class="k">${k}</span><span class="v ${cls(v)}">${pct(v)}</span></div>`).join("")}
+        ${extra.map(([k, v]) => `<div><span class="k">${k}</span><span class="v">${v}</span></div>`).join("")}</div>
+      <a class="m-link" href="${link}" target="_blank" rel="noopener">${isKr ? "네이버 증권에서 보기" : "Yahoo Finance에서 보기"} ↗</a>`;
+    $("#modal").classList.add("show");
+    $("#mClose").onclick = closeModal;
+  }
+  function closeModal() { $("#modal").classList.remove("show"); }
+  $("#modal").onclick = (e) => { if (e.target.id === "modal") closeModal(); };
+  addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+  function initStockControls() {
+    seg($("#stUni"), [{ k: "kr", l: "국내 (WICS)" }, { k: "global", l: "글로벌" }], ST.uni, (k) => { ST.uni = k; renderStocks(); });
+    seg($("#stPer"), PER_GL, ST.per, (k) => { ST.per = k; renderStocks(); });
+  }
+
   /* ── 수급 ─────────────────────────────────────────── */
   const FL = { mkt: "KOSPI", inv: "foreign", dir: "buy", win: "1d" };
   const INV_C = { 개인: "var(--c-ind)", 외국인: "var(--c-for)", 기관: "var(--c-ins)" };
@@ -336,17 +415,22 @@
 
   /* ── 부트 ─────────────────────────────────────────── */
   function renderAll() {
-    renderTape(); renderIndices(); renderMacro(); renderSector(); renderFlow(); renderNews();
+    renderTape(); renderIndices(); renderMacro(); renderSector(); renderStocks(); renderFlow(); renderNews();
     const m = D.meta;
     $("#updated").textContent = m ? `최종 갱신 ${m.updated} (KST) · 평일 자동 업데이트` : "갱신 정보 없음";
   }
   const get = (n) => fetch(`data/${n}.json${NC}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 
-  initTheme(); initNav(); initFlowControls(); initNewsControls();
+  initTheme(); initNav(); initFlowControls(); initNewsControls(); initStockControls();
   seg($("#secUni"), UNIS, SEC.uni, (k) => { SEC.uni = k; renderSector(); });
   Promise.all(["meta", "global", "rates", "korea", "news"].map(get)).then(([meta, g, r, k, n]) => {
     Object.assign(D, { meta, global: g, rates: r, korea: k, news: n });
     renderAll();
+  });
+  // 종목 카드 데이터는 용량이 커서 따로 받아 그린다
+  Promise.all(["stocks_kr", "stocks_global"].map(get)).then(([kr, gl]) => {
+    D.stocks_kr = kr; D.stocks_global = gl;
+    renderStocks();
   });
   let rz;
   addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => D.korea && drawFlowChart(D.korea.flow[FL.mkt] || []), 150); });

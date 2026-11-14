@@ -12,7 +12,7 @@
   })();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<link rel="stylesheet" href="assets/style.css?v=1">
+<link rel="stylesheet" href="assets/style.css?v=2">
 </head>
 <body>
 <header class="top">
@@ -33,6 +33,7 @@
     <a href="#sec-index">지수</a>
     <a href="#sec-macro">환율·금리</a>
     <a href="#sec-sector">섹터</a>
+    <a href="#sec-stocks">섹터별 종목</a>
     <a href="#sec-flow">수급</a>
     <a href="#sec-news">뉴스</a>
   </nav>
@@ -59,6 +60,16 @@
     </div>
     <div class="bars" id="sectorBars"></div>
     <p class="hint" id="sectorHint"></p>
+  </section>
+
+  <section id="sec-stocks" class="sec">
+    <div class="sec-h"><h2>섹터별 종목</h2><span class="asof" id="asof-stocks"></span></div>
+    <div class="controls">
+      <div class="seg" id="stUni"></div>
+      <div class="seg" id="stPer"></div>
+    </div>
+    <div class="chips" id="stJump"></div>
+    <div id="stBoard"></div>
   </section>
 
   <section id="sec-flow" class="sec">
@@ -106,6 +117,7 @@
 </footer>
 
 <div class="tip" id="tip"></div>
-<script src="assets/app.js?v=1"></script>
+<div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modalBox" role="dialog"></div></div>
+<script src="assets/app.js?v=2"></script>
 </body>
 </html>

@@ -486,10 +486,25 @@ def collect_news() -> dict:
 
 
 # ──────────────────────────────────────────────────────────────────────
+CTX: dict = {}
+
+
+def _stocks_kr():
+    from stocks import collect_stocks_kr
+    return collect_stocks_kr(CTX)
+
+
+def _stocks_global():
+    from stocks import collect_stocks_global
+    return collect_stocks_global(CTX)
+
+
 SECTIONS = {
     "global": collect_global,
     "rates": collect_rates_fx,
     "korea": collect_korea,
+    "stocks_kr": _stocks_kr,
+    "stocks_global": _stocks_global,
     "news": collect_news,
 }
 
@@ -526,6 +541,8 @@ def main():
     except Exception:
         pass
 
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    CTX["load_prev"] = lambda name: load_prev(a.prev, out, name)
     meta = load_prev(a.prev, out, "meta") or {}
     meta.setdefault("sections", {})
     failed = []
