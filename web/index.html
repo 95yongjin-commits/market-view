@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>데일리 마켓뷰</title>
+<script>
+  (function () {
+    var t = "dark";
+    try { t = localStorage.getItem("mv-theme") || "dark"; } catch (e) {}
+    document.documentElement.setAttribute("data-theme", t);
+  })();
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="assets/style.css?v=1">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <h1>데일리 마켓뷰</h1>
+        <p class="sub" id="updated">데이터 불러오는 중…</p>
+      </div>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="테마 전환">
+      <span class="ico-sun">☀</span><span class="ico-moon">☾</span>
+      <span class="theme-lbl"></span>
+    </button>
+  </div>
+  <nav class="wrap nav" id="nav">
+    <a href="#sec-index">지수</a>
+    <a href="#sec-macro">환율·금리</a>
+    <a href="#sec-sector">섹터</a>
+    <a href="#sec-flow">수급</a>
+    <a href="#sec-news">뉴스</a>
+  </nav>
+</header>
+
+<div class="tape-wrap"><div class="wrap tape" id="tape"></div></div>
+
+<main class="wrap">
+  <section id="sec-index" class="sec">
+    <div class="sec-h"><h2>주요 지수</h2><span class="asof" id="asof-index"></span></div>
+    <div id="indices"></div>
+  </section>
+
+  <section id="sec-macro" class="sec">
+    <div class="sec-h"><h2>환율 · 금리 · 원자재</h2><span class="asof" id="asof-macro"></span></div>
+    <div class="grid3" id="macro"></div>
+  </section>
+
+  <section id="sec-sector" class="sec">
+    <div class="sec-h"><h2>섹터 강세</h2><span class="asof" id="asof-sector"></span></div>
+    <div class="controls">
+      <div class="seg" id="secUni"></div>
+      <div class="seg" id="secPer"></div>
+    </div>
+    <div class="bars" id="sectorBars"></div>
+    <p class="hint" id="sectorHint"></p>
+  </section>
+
+  <section id="sec-flow" class="sec">
+    <div class="sec-h"><h2>국내 수급</h2><span class="asof" id="asof-flow"></span></div>
+    <div class="flow-grid">
+      <div class="card">
+        <div class="card-h">
+          <h3>투자자별 순매수</h3>
+          <div class="seg sm" id="flowMkt"></div>
+        </div>
+        <div id="flowToday"></div>
+        <div id="flowChart"></div>
+        <div class="card-h mt"><h3>업종별 외국인·기관 순매수</h3><span class="muted sm-txt" id="flowSecMkt"></span></div>
+        <div id="flowSector"></div>
+      </div>
+      <div class="card">
+        <div class="card-h">
+          <h3>순매수 상위 종목</h3>
+          <div class="ctrl-row">
+            <div class="seg sm" id="topInv"></div>
+            <div class="seg sm" id="topDir"></div>
+            <div class="seg sm" id="topWin"></div>
+          </div>
+        </div>
+        <div id="topTable"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-news" class="sec">
+    <div class="sec-h"><h2>뉴스플로우</h2><span class="asof" id="asof-news"></span></div>
+    <div class="news-ctrl">
+      <div class="seg" id="newsRegion"></div>
+      <input type="search" id="newsQ" placeholder="키워드 검색 (예: 삼성전자, 금리)">
+    </div>
+    <div class="chips" id="newsTags"></div>
+    <ol class="news" id="newsList"></ol>
+    <button class="more" id="newsMore" type="button">더 보기</button>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>데이터: KRX 정보데이터시스템(국내 업종·수급), Yahoo Finance(지수·해외 ETF·원자재), 네이버 증권(금리·환율, 환율은 하나은행 고시 기준), 각 언론사 RSS.</p>
+  <p>투자 참고용 자료이며 실제 시세와 차이·지연이 있을 수 있습니다.</p>
+</footer>
+
+<div class="tip" id="tip"></div>
+<script src="assets/app.js?v=1"></script>
+</body>
+</html>
