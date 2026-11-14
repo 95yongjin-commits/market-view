@@ -288,3 +288,9 @@ html, body { overflow-x: hidden; }
   .sc { padding: 10px 10px 9px; }
   .m-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* 소속 · 문의 */
+.brand h1 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.brand .org { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0; }
+.foot .contact { font-size: 13px; color: var(--ink-2); padding: 12px 14px; margin-bottom: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+.foot .contact b { color: var(--ink); }
