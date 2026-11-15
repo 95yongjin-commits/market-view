@@ -465,12 +465,17 @@
   /* ── 네비게이션 하이라이트 ─────────────────────────── */
   function initNav() {
     const links = [...document.querySelectorAll("#nav a")];
-    const io = new IntersectionObserver((ents) => {
-      ents.forEach((en) => {
-        if (en.isIntersecting) links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id));
-      });
-    }, { rootMargin: "-120px 0px -65% 0px" });
-    document.querySelectorAll("section.sec").forEach((s) => io.observe(s));
+    // 화면 위쪽 기준선(헤더 아래)을 지난 마지막 섹션을 현재 위치로 본다. 맨 위에서는 첫 섹션.
+    const secs = [...document.querySelectorAll("section.sec")];
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      let cur = secs[0];
+      for (const s of secs) if (s.getBoundingClientRect().top <= 160) cur = s;
+      links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + cur.id));
+    };
+    addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+    update();
   }
 
   /* ── 부트 ─────────────────────────────────────────── */
