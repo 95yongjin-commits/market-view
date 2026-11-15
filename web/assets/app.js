@@ -492,6 +492,8 @@
     D.stocks_kr = kr; D.stocks_global = gl;
     renderStocks();
   });
+  window.MV = { D, $, esc, isN, cls, sgn, num, pct, spark, seg, showTip, hideTip, staleBadge, openModal, fmtPx, WD };
+  document.dispatchEvent(new Event("mv:ready"));
   let rz;
   addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => D.korea && drawFlowChart(D.korea.flow[FL.mkt] || []), 150); });
 })();

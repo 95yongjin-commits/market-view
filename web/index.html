@@ -12,7 +12,7 @@
   })();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<link rel="stylesheet" href="assets/style.css?v=4">
+<link rel="stylesheet" href="assets/style.css?v=5">
 </head>
 <body>
 <header class="top">
@@ -35,6 +35,8 @@
     <a href="#sec-cal">일정</a>
     <a href="#sec-sector">섹터</a>
     <a href="#sec-stocks">섹터별 종목</a>
+    <a href="#sec-vc">밸류체인</a>
+    <a href="#sec-scan">차트 포착기</a>
     <a href="#sec-flow">수급</a>
     <a href="#sec-news">뉴스</a>
   </nav>
@@ -80,6 +82,39 @@
     </div>
     <div class="chips" id="stJump"></div>
     <div id="stBoard"></div>
+  </section>
+
+  <section id="sec-vc" class="sec">
+    <div class="sec-h"><h2>섹터 밸류체인</h2><span class="asof" id="asof-vc"></span></div>
+    <div class="controls">
+      <div class="seg" id="vcSec"></div>
+      <div class="seg" id="vcPer"></div>
+    </div>
+    <div class="vc-strength" id="vcStrength"></div>
+    <div class="vc-flow" id="vcFlow"><div class="err">밸류체인 불러오는 중…</div></div>
+    <p class="hint">단계는 공정 순서(왼쪽 → 오른쪽)이고, 칸 색이 진할수록 등락폭이 큽니다. 종목을 누르면 차트가 열립니다.</p>
+  </section>
+
+  <section id="sec-scan" class="sec">
+    <div class="sec-h"><h2>차트 포착기</h2><span class="asof" id="asof-scan"></span></div>
+    <div class="controls">
+      <div class="ctrl-row">
+        <div class="seg" id="scMkt"></div>
+        <select class="sel" id="scSector"></select>
+        <select class="sel" id="scCap"></select>
+      </div>
+      <button type="button" class="ghost-btn" id="scSetBtn">⚙ 기준값 설정</button>
+    </div>
+    <div class="sc-settings" id="scSettings"></div>
+    <div class="conds" id="scConds"></div>
+    <div class="sc-result-h"><span id="scCount"></span>
+      <select class="sel" id="scSort">
+        <option value="cap">시총 큰 순</option><option value="chg">등락률 높은 순</option><option value="hi">52주 고점에 가까운 순</option>
+      </select>
+    </div>
+    <div class="card sc-table" id="scTable"><div class="err">가격 데이터 불러오는 중…</div></div>
+    <button class="more" id="scMore" type="button">더 보기</button>
+    <p class="hint">조건을 여러 개 고르면 모두 만족하는 종목만 나옵니다. 조건 충족은 기술적 상태를 보여줄 뿐 매수·매도 추천이 아닙니다. 장중에는 실행 시점 가격 기준입니다.</p>
   </section>
 
   <section id="sec-flow" class="sec">
@@ -140,6 +175,7 @@
 
 <div class="tip" id="tip"></div>
 <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modalBox" role="dialog"></div></div>
-<script src="assets/app.js?v=4"></script>
+<script src="assets/app.js?v=5"></script>
+<script src="assets/scan.js?v=1"></script>
 </body>
 </html>

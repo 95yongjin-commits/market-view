@@ -509,6 +509,21 @@ def _short():
     return collect_short(CTX)
 
 
+def _scan():
+    from scan import collect_scan
+    return collect_scan(CTX)
+
+
+def _scan_ath():
+    from scan import collect_scan_ath
+    return collect_scan_ath(CTX)
+
+
+def _valuechain():
+    from scan import collect_valuechain
+    return collect_valuechain(CTX)
+
+
 SECTIONS = {
     "global": collect_global,
     "rates": collect_rates_fx,
@@ -517,6 +532,9 @@ SECTIONS = {
     "short": _short,
     "stocks_kr": _stocks_kr,
     "stocks_global": _stocks_global,
+    "valuechain": _valuechain,
+    "scan": _scan,
+    "scan_ath": _scan_ath,
     "news": collect_news,
 }
 
