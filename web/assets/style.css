@@ -388,3 +388,8 @@ html, body { overflow-x: hidden; }
   .vc-arrow { transform: rotate(90deg); height: 14px; }
   .sc-table .t th:nth-child(3), .sc-table .t td:nth-child(3), .sc-table .t th:nth-child(6), .sc-table .t td:nth-child(6), .sc-table .t td.sp, .sc-table .t th:last-child { display: none; }
 }
+
+.fib-lv{font-size:12px;margin-top:8px;line-height:1.8}
+.fib-lv span:not(.muted){display:inline-block;margin-right:10px;font-variant-numeric:tabular-nums}
+.fib-lv span.on{color:#f5a524;font-weight:700}
+.sc-settings select.sel{margin-left:6px;padding:3px 6px}

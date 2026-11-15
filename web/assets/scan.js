@@ -55,13 +55,13 @@
 
     /* ════════ 차트 포착기 ════════ */
     const DEF = {
-      kr: { ma: [5, 20, 60, 120], bbN: 20, bbK: 2, gcS: 5, gcL: 20, hold: 20, recent: 3, tol: 0 },
-      us: { ma: [5, 20, 50, 120], bbN: 20, bbK: 2, gcS: 5, gcL: 20, hold: 20, recent: 3, tol: 0 },
+      kr: { ma: [5, 20, 60, 120], bbN: 20, bbK: 2, gcS: 5, gcL: 20, hold: 20, recent: 3, tol: 0, fibN: 120, fibMin: 20, fibLv: 61.8, fibTol: 2 },
+      us: { ma: [5, 20, 50, 120], bbN: 20, bbK: 2, gcS: 5, gcL: 20, hold: 20, recent: 3, tol: 0, fibN: 120, fibMin: 20, fibLv: 61.8, fibTol: 2 },
     };
     const SC = { mkt: "kr", sector: "", cap: 0, sort: "cap", limit: 50, conds: new Set(), set: loadSet() };
     let scData, computed = null;
     function loadSet() {
-      try { const s = JSON.parse(localStorage.getItem("mv-scan-set") || "null"); if (s && s.kr && s.us) return s; } catch (e) {}
+      try { const s = JSON.parse(localStorage.getItem("mv-scan-set") || "null"); if (s && s.kr && s.us) return { kr: { ...DEF.kr, ...s.kr }, us: { ...DEF.us, ...s.us } }; } catch (e) {}
       return JSON.parse(JSON.stringify(DEF));
     }
     function saveSet() { try { localStorage.setItem("mv-scan-set", JSON.stringify(SC.set)); } catch (e) {} }
@@ -72,9 +72,10 @@
         { g: `정배열 (${m})`, items: [["alignHold", "정배열 유지"], ["alignNew", `${p.recent}일 내 전환`]] },
         { g: `골든크로스 (${p.gcS}일선 ↗ ${p.gcL}일선)`, items: [["gcHold", `유지 (${p.hold}일 이내 발생)`], ["gcNew", `${p.recent}일 내 발생`]] },
         { g: "신고가 (종가)" + (p.tol ? ` · -${p.tol}% 이내` : ""), items: [["hi52", "52주 신고가"], ["ath", "역사적 신고가"]] },
+        { g: `피보나치 되돌림 (${p.fibN}일 상승파동 ${p.fibLv}% ±${p.fibTol}%)`, items: [["fibNear", "되돌림 레벨 근접"], ["fibBounce", `${p.recent}일 내 레벨 지지 후 반등`]] },
       ];
     };
-    const LABEL = { bbAbove: "볼밴 상단 위", bbBreak: "볼밴 돌파", alignHold: "정배열", alignNew: "정배열 전환", gcHold: "골든크로스 유지", gcNew: "골든크로스", hi52: "52주 신고가", ath: "역사적 신고가" };
+    const LABEL = { bbAbove: "볼밴 상단 위", bbBreak: "볼밴 돌파", alignHold: "정배열", alignNew: "정배열 전환", gcHold: "골든크로스 유지", gcNew: "골든크로스", hi52: "52주 신고가", ath: "역사적 신고가", fibNear: "피보 레벨 근접", fibBounce: "피보 지지 반등" };
 
     function smaArr(c, n) {
       const out = new Array(c.length).fill(null);
@@ -97,6 +98,16 @@
       }
       return out;
     }
+    // 피보나치: 최근 fibN일 안의 고점(H)과 그 이전 저점(L)으로 상승파동을 잡고, 고점에서 fibLv% 되돌린 가격을 기준 레벨로 쓴다
+    const FIB_LV = [0, 23.6, 38.2, 50, 61.8, 78.6, 100];
+    function fibOf(c, t, p) {
+      const s0 = Math.max(0, t - p.fibN + 1);
+      let hi = -Infinity, hiI = -1, lo = Infinity, loI = -1;
+      for (let i = s0; i <= t; i++) if (c[i] != null && c[i] > hi) { hi = c[i]; hiI = i; }
+      for (let i = s0; i < hiI; i++) if (c[i] != null && c[i] < lo) { lo = c[i]; loI = i; }
+      if (loI < 0 || hi / lo - 1 < p.fibMin / 100) return null;
+      return { hi, lo, hiI, loI, lv: hi - ((hi - lo) * p.fibLv) / 100, at: (r) => hi - ((hi - lo) * r) / 100 };
+    }
     // 조건이 '연속으로' 참인 마지막 구간 길이 (오늘부터 거꾸로). 중간에 데이터 없으면 Infinity(=발생 시점 모름)
     function runLen(fn, t) {
       let r = 0;
@@ -115,6 +126,13 @@
       const hi = prior.length ? Math.max(...prior) : null;
       const tol = 1 - (p.tol || 0) / 100;
       const alRun = runLen(al, t), gcRun = runLen(up, t);
+      const fb = fibOf(c, t, p), ft = (p.fibTol || 0) / 100;
+      let fibBounce = false;
+      if (fb && fb.hiI < t - 1) {
+        const w = c.slice(Math.max(fb.hiI + 1, t - p.recent), t).filter((x) => x != null);
+        const mn = w.length ? Math.min(...w) : null;
+        fibBounce = mn != null && mn <= fb.lv * (1 + ft) && mn >= fb.lv * (1 - ft) && last > fb.lv && last > c[t - 1];
+      }
       const f = {
         bbAbove: bu[t] != null && last > bu[t],
         bbBreak: bu[t] != null && bu[t - 1] != null && last > bu[t] && c[t - 1] <= bu[t - 1],
@@ -124,6 +142,8 @@
         gcNew: gcRun >= 1 && gcRun <= p.recent,
         hi52: prior.length >= 200 && last >= hi * tol,
         ath: isN(it[4]) && last >= it[4] * tol,
+        fibNear: !!fb && fb.hiI < t && Math.abs(last / fb.lv - 1) <= ft,
+        fibBounce,
       };
       const prev = c[t - 1];
       return { f, chg: prev ? (last / prev - 1) * 100 : null, fromHi: hi ? (last / Math.max(hi, last) - 1) * 100 : null, gcRun, alRun };
@@ -190,12 +210,15 @@
         <div class="ss-row">${inp("bbN", p.bbN, "볼린저 기간")}${inp("bbK", p.bbK, "표준편차 배수", 52, 0.5)}</div>
         <div class="ss-row">${inp("gcS", p.gcS, "골든크로스 단기선")}${inp("gcL", p.gcL, "장기선")}${inp("hold", p.hold, "유지 인정 기간(일)")}</div>
         <div class="ss-row">${inp("recent", p.recent, "'최근 발생' 기간(일)")}${inp("tol", p.tol, "신고가 근접 허용(%)", 52, 0.5)}</div>
+        <div class="ss-row">${inp("fibN", p.fibN, "피보나치 파동 구간(일)")}${inp("fibMin", p.fibMin, "최소 상승폭(%)")}
+          <label>되돌림 레벨<select class="sel" data-k="fibLv">${[23.6, 38.2, 50, 61.8, 78.6].map((v) => `<option value="${v}" ${v === p.fibLv ? "selected" : ""}>${v}%</option>`).join("")}</select></label>${inp("fibTol", p.fibTol, "레벨 ± 허용(%)", 52, 0.5)}</div>
         <div class="ss-row"><button type="button" class="ghost-btn" id="ssReset">기본값으로</button></div>`;
       $("#scSettings").oninput = (e) => {
         const k = e.target.dataset.k; if (!k) return;
         const v = parseFloat(e.target.value); if (!isFinite(v) || v < 0) return;
         if (k.startsWith("ma")) p.ma[+k.slice(2)] = Math.max(1, Math.round(v));
-        else p[k] = ["bbK", "tol"].includes(k) ? v : Math.max(1, Math.round(v));
+        else if (k === "fibN") p[k] = Math.min(255, Math.max(10, Math.round(v)));
+        else p[k] = ["bbK", "tol", "fibLv", "fibTol", "fibMin"].includes(k) ? v : Math.max(1, Math.round(v));
         saveSet(); clearTimeout(renderSettings.t);
         renderSettings.t = setTimeout(() => { computeAll(); renderConds(); renderResult(); setBtn(); }, 250);
       };
@@ -211,7 +234,9 @@
       const cs = c.slice(off);
       const prior = c.slice(Math.max(0, c.length - 252), c.length - 1).filter((x) => x != null);
       const hi52 = prior.length ? Math.max(...prior) : null;
-      const vals = [...cs, ...bu, ...bl, ...mas.flat()].filter(isN);
+      const fb = fibOf(c, c.length - 1, p);
+      const fibIn = fb && fb.loI >= off;
+      const vals = [...cs, ...bu, ...bl, ...mas.flat(), ...(fibIn ? [fb.hi, fb.lo] : [])].filter(isN);
       const mn = Math.min(...vals), mx = Math.max(...vals, hi52 || -Infinity) || 1, W = 600, H = 230, rg = mx - mn || 1;
       const X = (i) => (i / (n - 1)) * W, Y = (v) => H - 4 - ((v - mn) / rg) * (H - 8);
       const path = (arr) => { let d = "", on = false; arr.forEach((v, i) => { if (v == null) { on = false; return; } d += (on ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1); on = true; }); return d; };
@@ -220,7 +245,9 @@
       const pts = bu.map((v, i) => (v != null && bl[i] != null ? [X(i), Y(v), Y(bl[i])] : null)).filter(Boolean);
       if (pts.length) band = `<path d="M${pts.map((q) => q[0].toFixed(1) + " " + q[1].toFixed(1)).join("L")}L${pts.slice().reverse().map((q) => q[0].toFixed(1) + " " + q[2].toFixed(1)).join("L")}Z" fill="var(--accent)" opacity=".08"/>`;
       const hline = hi52 && hi52 <= mx ? `<line x1="0" x2="${W}" y1="${Y(hi52)}" y2="${Y(hi52)}" stroke="var(--muted)" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>` : "";
-      const svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:230px;display:block;margin:10px 0 4px">${band}${hline}
+      const fibSvg = fibIn ? FIB_LV.map((r) => { const y = Y(fb.at(r)).toFixed(1), on = r === p.fibLv;
+          return `<line x1="${X(fb.loI - off).toFixed(1)}" x2="${W}" y1="${y}" y2="${y}" stroke="${on ? "#f5a524" : "var(--muted)"}" stroke-width="${on ? 1.4 : 0.8}" stroke-dasharray="${on ? "6 3" : "2 4"}" opacity="${on ? 1 : 0.6}" vector-effect="non-scaling-stroke"/>`; }).join("") : "";
+      const svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:230px;display:block;margin:10px 0 4px">${band}${hline}${fibSvg}
         ${mas.map((m, k) => `<path d="${path(m)}" fill="none" stroke="${MC[k]}" stroke-width="1.1" opacity=".9" vector-effect="non-scaling-stroke"/>`).join("")}
         <path d="${path(cs)}" fill="none" stroke="var(--ink)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
       const r = computed.find((x) => x.it === it).r;
@@ -231,6 +258,7 @@
         <div class="m-px">${fmtPx(cs[cs.length - 1], ccy)}<span class="${cls(r.chg)}">${pct(r.chg)}</span></div>
         ${svg}
         <div class="legend"><span><i style="background:var(--ink)"></i>종가</span>${p.ma.map((m, k) => `<span><i style="background:${MC[k]}"></i>${m}일선</span>`).join("")}<span><i style="background:var(--accent);opacity:.3"></i>볼린저밴드</span>${hi52 ? `<span>┄ 52주 고점 ${fmtPx(hi52, ccy)}</span>` : ""}</div>
+        ${fb ? `<div class="fib-lv"><b>피보나치</b> <span class="muted">${p.fibN}일 상승파동 ${fmtPx(fb.lo, ccy)} → ${fmtPx(fb.hi, ccy)}${fibIn ? "" : " (차트 범위 밖)"}</span><br>${FIB_LV.slice(1, -1).map((r) => `<span class="${r === p.fibLv ? "on" : ""}">${r}% ${fmtPx(fb.at(r), ccy)}</span>`).join("")}</div>` : `<div class="fib-lv muted">피보나치: 최근 ${p.fibN}일에 ${p.fibMin}% 이상 상승파동이 없어 레벨을 계산하지 않음</div>`}
         <div class="tags" style="margin-top:12px">${Object.keys(LABEL).map((k) => `<span class="tag ${r.f[k] ? "hl" : "off"}">${r.f[k] ? "✓" : "–"} ${LABEL[k]}</span>`).join("")}</div>
         <div class="m-axis" style="margin-top:8px"><span>최근 ${n}거래일 · 역사적 고가 ${isN(it[4]) ? fmtPx(it[4], ccy) : "–"}</span></div>
         <a class="m-link" href="${link}" target="_blank" rel="noopener">${SC.mkt === "kr" ? "네이버 증권에서 보기" : "Yahoo Finance에서 보기"} ↗</a>`;
