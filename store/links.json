@@ -1,5 +1,17 @@
 {
- "rev": 0,
- "offset": 353965556,
- "items": []
+ "rev": 1,
+ "offset": 353965557,
+ "items": [
+  {
+   "kind": "youtube",
+   "vid": "t8OJHL6q3T4",
+   "url": "https://www.youtube.com/watch?v=t8OJHL6q3T4",
+   "thumb": "https://i.ytimg.com/vi/t8OJHL6q3T4/mqdefault.jpg",
+   "site": "YouTube",
+   "title": "\"투자를 과학으로 착각하지 마라\" 똑똑한 개미들이 올겨울 하락장에 물리는 이유 (윤지호 경제평론가) [촬영일 26.11.10]",
+   "source": "언더스탠딩 : 세상의 모든 지식",
+   "posted": "2026-11-15 21:21",
+   "id": "4-0"
+  }
+ ]
 }
