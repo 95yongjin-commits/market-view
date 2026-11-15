@@ -1908,6 +1908,214 @@
    ]
   },
   {
+   "name": "로봇",
+   "stages": [
+    {
+     "order": 1,
+     "name": "핵심부품",
+     "sub": "감속기·모터·액추에이터",
+     "stocks": [
+      {
+       "ticker": "058610",
+       "name": "에스피지",
+       "country": "KR",
+       "role": "정밀 감속기·모터"
+      },
+      {
+       "ticker": "389500",
+       "name": "에스비비테크",
+       "country": "KR",
+       "role": "하모닉 감속기"
+      },
+      {
+       "ticker": "160190",
+       "name": "하이젠알앤엠",
+       "country": "KR",
+       "role": "서보모터·구동기"
+      },
+      {
+       "ticker": "437730",
+       "name": "삼현",
+       "country": "KR",
+       "role": "구동 모듈"
+      },
+      {
+       "ticker": "108490",
+       "name": "로보티즈",
+       "country": "KR",
+       "role": "액추에이터(다이나믹셀)"
+      }
+     ]
+    },
+    {
+     "order": 2,
+     "name": "비전·제어·AI",
+     "sub": "센서·비전·로봇 SW",
+     "stocks": [
+      {
+       "ticker": "098460",
+       "name": "고영",
+       "country": "KR",
+       "role": "3D 비전 검사"
+      },
+      {
+       "ticker": "475400",
+       "name": "씨메스로보틱스",
+       "country": "KR",
+       "role": "AI 비전 로봇 솔루션"
+      },
+      {
+       "ticker": "466100",
+       "name": "클로봇",
+       "country": "KR",
+       "role": "로봇 관제 SW"
+      },
+      {
+       "ticker": "NVDA",
+       "name": "엔비디아",
+       "country": "US",
+       "role": "로봇 AI 칩·플랫폼"
+      }
+     ]
+    },
+    {
+     "order": 3,
+     "name": "산업·협동로봇",
+     "sub": "제조 현장 자동화",
+     "stocks": [
+      {
+       "ticker": "454910",
+       "name": "두산로보틱스",
+       "country": "KR",
+       "role": "협동로봇"
+      },
+      {
+       "ticker": "277810",
+       "name": "레인보우로보틱스",
+       "country": "KR",
+       "role": "협동로봇"
+      },
+      {
+       "ticker": "348340",
+       "name": "뉴로메카",
+       "country": "KR",
+       "role": "협동로봇"
+      },
+      {
+       "ticker": "388720",
+       "name": "유일로보틱스",
+       "country": "KR",
+       "role": "산업용 로봇"
+      },
+      {
+       "ticker": "090360",
+       "name": "로보스타",
+       "country": "KR",
+       "role": "산업용 로봇(LG 계열)"
+      },
+      {
+       "ticker": "117730",
+       "name": "티로보틱스",
+       "country": "KR",
+       "role": "진공 이송로봇"
+      },
+      {
+       "ticker": "TER",
+       "name": "테라다인",
+       "country": "US",
+       "role": "협동로봇(유니버설로봇)"
+      },
+      {
+       "ticker": "ROK",
+       "name": "로크웰오토메이션",
+       "country": "US",
+       "role": "공장 자동화"
+      }
+     ]
+    },
+    {
+     "order": 4,
+     "name": "서비스·의료로봇",
+     "sub": "물류·수술·웨어러블",
+     "stocks": [
+      {
+       "ticker": "108490",
+       "name": "로보티즈",
+       "country": "KR",
+       "role": "실내외 배송로봇"
+      },
+      {
+       "ticker": "060280",
+       "name": "큐렉소",
+       "country": "KR",
+       "role": "수술로봇"
+      },
+      {
+       "ticker": "455900",
+       "name": "엔젤로보틱스",
+       "country": "KR",
+       "role": "웨어러블 로봇"
+      },
+      {
+       "ticker": "270660",
+       "name": "에브리봇",
+       "country": "KR",
+       "role": "청소로봇"
+      },
+      {
+       "ticker": "ISRG",
+       "name": "인튜이티브서지컬",
+       "country": "US",
+       "role": "수술로봇"
+      },
+      {
+       "ticker": "SYM",
+       "name": "심보틱",
+       "country": "US",
+       "role": "물류 자동화 로봇"
+      }
+     ]
+    },
+    {
+     "order": 5,
+     "name": "휴머노이드·대기업",
+     "sub": "휴머노이드·그룹 로봇 사업",
+     "stocks": [
+      {
+       "ticker": "277810",
+       "name": "레인보우로보틱스",
+       "country": "KR",
+       "role": "휴머노이드(삼성 계열)"
+      },
+      {
+       "ticker": "005930",
+       "name": "삼성전자",
+       "country": "KR",
+       "role": "레인보우로보틱스 최대주주"
+      },
+      {
+       "ticker": "005380",
+       "name": "현대차",
+       "country": "KR",
+       "role": "보스턴다이내믹스 모회사"
+      },
+      {
+       "ticker": "066570",
+       "name": "LG전자",
+       "country": "KR",
+       "role": "서비스로봇(베어로보틱스)"
+      },
+      {
+       "ticker": "TSLA",
+       "name": "테슬라",
+       "country": "US",
+       "role": "휴머노이드(옵티머스)"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "name": "화장품",
    "stages": [
     {
