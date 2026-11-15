@@ -19,6 +19,7 @@ import json
 import os
 import re
 import sys
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlparse
@@ -89,7 +90,14 @@ class Bot:
         self.base = f"https://api.telegram.org/bot{token}"
 
     def call(self, method: str, **params):
-        r = requests.post(f"{self.base}/{method}", json=params, timeout=30)
+        for i in range(3):   # 일시적인 연결 끊김 대비
+            try:
+                r = requests.post(f"{self.base}/{method}", json=params, timeout=30)
+                break
+            except requests.RequestException:
+                if i == 2:
+                    raise
+                time.sleep(2 * (i + 1))
         j = r.json()
         if not j.get("ok"):
             raise RuntimeError(f"telegram {method}: {j.get('description')}")
