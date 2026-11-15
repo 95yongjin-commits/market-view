@@ -1906,6 +1906,974 @@
      ]
     }
    ]
+  },
+  {
+   "name": "화장품",
+   "stages": [
+    {
+     "order": 1,
+     "name": "ODM·제조",
+     "sub": "화장품 위탁생산",
+     "stocks": [
+      {
+       "ticker": "192820",
+       "name": "코스맥스",
+       "country": "KR",
+       "role": "기초·색조 ODM(1위)"
+      },
+      {
+       "ticker": "161890",
+       "name": "한국콜마",
+       "country": "KR",
+       "role": "기초·선케어 ODM"
+      },
+      {
+       "ticker": "241710",
+       "name": "코스메카코리아",
+       "country": "KR",
+       "role": "기초 ODM"
+      },
+      {
+       "ticker": "352480",
+       "name": "씨앤씨인터내셔널",
+       "country": "KR",
+       "role": "색조 ODM"
+      }
+     ]
+    },
+    {
+     "order": 2,
+     "name": "용기·패키징",
+     "sub": "펌프·용기",
+     "stocks": [
+      {
+       "ticker": "251970",
+       "name": "펌텍코리아",
+       "country": "KR",
+       "role": "펌프·용기"
+      }
+     ]
+    },
+    {
+     "order": 3,
+     "name": "브랜드(인디·신흥)",
+     "sub": "수출 중심 브랜드",
+     "stocks": [
+      {
+       "ticker": "278470",
+       "name": "에이피알",
+       "country": "KR",
+       "role": "메디큐브·뷰티 디바이스"
+      },
+      {
+       "ticker": "483650",
+       "name": "달바글로벌",
+       "country": "KR",
+       "role": "달바"
+      },
+      {
+       "ticker": "018290",
+       "name": "브이티",
+       "country": "KR",
+       "role": "리들샷"
+      },
+      {
+       "ticker": "237880",
+       "name": "클리오",
+       "country": "KR",
+       "role": "색조"
+      },
+      {
+       "ticker": "114840",
+       "name": "아이패밀리에스씨",
+       "country": "KR",
+       "role": "롬앤"
+      },
+      {
+       "ticker": "439090",
+       "name": "마녀공장",
+       "country": "KR",
+       "role": "클렌징"
+      },
+      {
+       "ticker": "214420",
+       "name": "토니모리",
+       "country": "KR",
+       "role": "브랜드"
+      },
+      {
+       "ticker": "ELF",
+       "name": "e.l.f.",
+       "country": "US",
+       "role": "저가 색조"
+      }
+     ]
+    },
+    {
+     "order": 4,
+     "name": "브랜드(대형)",
+     "sub": "종합 화장품",
+     "stocks": [
+      {
+       "ticker": "090430",
+       "name": "아모레퍼시픽",
+       "country": "KR",
+       "role": "설화수·코스알엑스"
+      },
+      {
+       "ticker": "051900",
+       "name": "LG생활건강",
+       "country": "KR",
+       "role": "후·생활용품"
+      },
+      {
+       "ticker": "018250",
+       "name": "애경산업",
+       "country": "KR",
+       "role": "생활·화장품"
+      },
+      {
+       "ticker": "EL",
+       "name": "에스티로더",
+       "country": "US",
+       "role": "프리미엄 브랜드"
+      }
+     ]
+    },
+    {
+     "order": 5,
+     "name": "유통·수출",
+     "sub": "해외 유통·면세",
+     "stocks": [
+      {
+       "ticker": "257720",
+       "name": "실리콘투",
+       "country": "KR",
+       "role": "K뷰티 해외 유통"
+      },
+      {
+       "ticker": "008770",
+       "name": "호텔신라",
+       "country": "KR",
+       "role": "면세점"
+      },
+      {
+       "ticker": "004170",
+       "name": "신세계",
+       "country": "KR",
+       "role": "면세·백화점"
+      },
+      {
+       "ticker": "ULTA",
+       "name": "울타뷰티",
+       "country": "US",
+       "role": "미국 화장품 유통"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "음식료",
+   "stages": [
+    {
+     "order": 1,
+     "name": "소재·원료",
+     "sub": "곡물가공·조미소재",
+     "stocks": [
+      {
+       "ticker": "097950",
+       "name": "CJ제일제당",
+       "country": "KR",
+       "role": "바이오·식품 소재"
+      },
+      {
+       "ticker": "001680",
+       "name": "대상",
+       "country": "KR",
+       "role": "조미소재·전분당"
+      },
+      {
+       "ticker": "145990",
+       "name": "삼양사",
+       "country": "KR",
+       "role": "설탕·전분당"
+      }
+     ]
+    },
+    {
+     "order": 2,
+     "name": "가공식품(수출)",
+     "sub": "라면·K푸드",
+     "stocks": [
+      {
+       "ticker": "003230",
+       "name": "삼양식품",
+       "country": "KR",
+       "role": "불닭볶음면"
+      },
+      {
+       "ticker": "004370",
+       "name": "농심",
+       "country": "KR",
+       "role": "신라면"
+      },
+      {
+       "ticker": "097950",
+       "name": "CJ제일제당",
+       "country": "KR",
+       "role": "비비고 만두"
+      },
+      {
+       "ticker": "007310",
+       "name": "오뚜기",
+       "country": "KR",
+       "role": "라면·소스"
+      },
+      {
+       "ticker": "017810",
+       "name": "풀무원",
+       "country": "KR",
+       "role": "두부·냉동"
+      },
+      {
+       "ticker": "001680",
+       "name": "대상",
+       "country": "KR",
+       "role": "종가 김치"
+      },
+      {
+       "ticker": "MDLZ",
+       "name": "몬델리즈",
+       "country": "US",
+       "role": "글로벌 제과"
+      }
+     ]
+    },
+    {
+     "order": 3,
+     "name": "제과·빙과",
+     "sub": "과자·아이스크림",
+     "stocks": [
+      {
+       "ticker": "271560",
+       "name": "오리온",
+       "country": "KR",
+       "role": "제과(중국·베트남)"
+      },
+      {
+       "ticker": "280360",
+       "name": "롯데웰푸드",
+       "country": "KR",
+       "role": "제과·빙과"
+      },
+      {
+       "ticker": "005180",
+       "name": "빙그레",
+       "country": "KR",
+       "role": "빙과·메로나"
+      },
+      {
+       "ticker": "005740",
+       "name": "크라운해태홀딩스",
+       "country": "KR",
+       "role": "제과(지주)"
+      }
+     ]
+    },
+    {
+     "order": 4,
+     "name": "음료·주류",
+     "sub": "음료·소주·맥주",
+     "stocks": [
+      {
+       "ticker": "000080",
+       "name": "하이트진로",
+       "country": "KR",
+       "role": "소주·맥주"
+      },
+      {
+       "ticker": "005300",
+       "name": "롯데칠성",
+       "country": "KR",
+       "role": "음료·주류"
+      },
+      {
+       "ticker": "KO",
+       "name": "코카콜라",
+       "country": "US",
+       "role": "음료"
+      },
+      {
+       "ticker": "PEP",
+       "name": "펩시코",
+       "country": "US",
+       "role": "음료·스낵"
+      }
+     ]
+    },
+    {
+     "order": 5,
+     "name": "유통(내수)",
+     "sub": "편의점·대형마트",
+     "stocks": [
+      {
+       "ticker": "282330",
+       "name": "BGF리테일",
+       "country": "KR",
+       "role": "편의점(CU)"
+      },
+      {
+       "ticker": "007070",
+       "name": "GS리테일",
+       "country": "KR",
+       "role": "편의점(GS25)"
+      },
+      {
+       "ticker": "139480",
+       "name": "이마트",
+       "country": "KR",
+       "role": "대형마트"
+      },
+      {
+       "ticker": "COST",
+       "name": "코스트코",
+       "country": "US",
+       "role": "창고형 마트"
+      },
+      {
+       "ticker": "WMT",
+       "name": "월마트",
+       "country": "US",
+       "role": "대형마트"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "금융",
+   "stages": [
+    {
+     "order": 1,
+     "name": "은행",
+     "sub": "은행지주·인터넷은행",
+     "stocks": [
+      {
+       "ticker": "105560",
+       "name": "KB금융",
+       "country": "KR",
+       "role": "은행지주"
+      },
+      {
+       "ticker": "055550",
+       "name": "신한지주",
+       "country": "KR",
+       "role": "은행지주"
+      },
+      {
+       "ticker": "086790",
+       "name": "하나금융지주",
+       "country": "KR",
+       "role": "은행지주"
+      },
+      {
+       "ticker": "316140",
+       "name": "우리금융지주",
+       "country": "KR",
+       "role": "은행지주"
+      },
+      {
+       "ticker": "024110",
+       "name": "기업은행",
+       "country": "KR",
+       "role": "국책은행"
+      },
+      {
+       "ticker": "138930",
+       "name": "BNK금융지주",
+       "country": "KR",
+       "role": "지방금융"
+      },
+      {
+       "ticker": "175330",
+       "name": "JB금융지주",
+       "country": "KR",
+       "role": "지방금융"
+      },
+      {
+       "ticker": "139130",
+       "name": "iM금융지주",
+       "country": "KR",
+       "role": "지방금융"
+      },
+      {
+       "ticker": "323410",
+       "name": "카카오뱅크",
+       "country": "KR",
+       "role": "인터넷은행"
+      },
+      {
+       "ticker": "JPM",
+       "name": "JP모건",
+       "country": "US",
+       "role": "은행"
+      },
+      {
+       "ticker": "BAC",
+       "name": "뱅크오브아메리카",
+       "country": "US",
+       "role": "은행"
+      }
+     ]
+    },
+    {
+     "order": 2,
+     "name": "증권",
+     "sub": "증권·IB",
+     "stocks": [
+      {
+       "ticker": "006800",
+       "name": "미래에셋증권",
+       "country": "KR",
+       "role": "증권"
+      },
+      {
+       "ticker": "071050",
+       "name": "한국금융지주",
+       "country": "KR",
+       "role": "증권(한국투자)"
+      },
+      {
+       "ticker": "005940",
+       "name": "NH투자증권",
+       "country": "KR",
+       "role": "증권"
+      },
+      {
+       "ticker": "016360",
+       "name": "삼성증권",
+       "country": "KR",
+       "role": "증권"
+      },
+      {
+       "ticker": "039490",
+       "name": "키움증권",
+       "country": "KR",
+       "role": "리테일 증권"
+      },
+      {
+       "ticker": "003540",
+       "name": "대신증권",
+       "country": "KR",
+       "role": "증권"
+      },
+      {
+       "ticker": "GS",
+       "name": "골드만삭스",
+       "country": "US",
+       "role": "IB"
+      },
+      {
+       "ticker": "MS",
+       "name": "모건스탠리",
+       "country": "US",
+       "role": "IB·자산관리"
+      },
+      {
+       "ticker": "SCHW",
+       "name": "찰스슈왑",
+       "country": "US",
+       "role": "리테일 증권"
+      }
+     ]
+    },
+    {
+     "order": 3,
+     "name": "보험",
+     "sub": "생명·손해보험",
+     "stocks": [
+      {
+       "ticker": "032830",
+       "name": "삼성생명",
+       "country": "KR",
+       "role": "생명보험"
+      },
+      {
+       "ticker": "000810",
+       "name": "삼성화재",
+       "country": "KR",
+       "role": "손해보험"
+      },
+      {
+       "ticker": "005830",
+       "name": "DB손해보험",
+       "country": "KR",
+       "role": "손해보험"
+      },
+      {
+       "ticker": "001450",
+       "name": "현대해상",
+       "country": "KR",
+       "role": "손해보험"
+      },
+      {
+       "ticker": "088350",
+       "name": "한화생명",
+       "country": "KR",
+       "role": "생명보험"
+      },
+      {
+       "ticker": "138040",
+       "name": "메리츠금융지주",
+       "country": "KR",
+       "role": "손보·증권 지주"
+      },
+      {
+       "ticker": "PGR",
+       "name": "프로그레시브",
+       "country": "US",
+       "role": "자동차보험"
+      }
+     ]
+    },
+    {
+     "order": 4,
+     "name": "카드·결제",
+     "sub": "카드·핀테크",
+     "stocks": [
+      {
+       "ticker": "029780",
+       "name": "삼성카드",
+       "country": "KR",
+       "role": "신용카드"
+      },
+      {
+       "ticker": "377300",
+       "name": "카카오페이",
+       "country": "KR",
+       "role": "간편결제"
+      },
+      {
+       "ticker": "V",
+       "name": "비자",
+       "country": "US",
+       "role": "결제망"
+      },
+      {
+       "ticker": "MA",
+       "name": "마스터카드",
+       "country": "US",
+       "role": "결제망"
+      }
+     ]
+    },
+    {
+     "order": 5,
+     "name": "자산운용·거래소",
+     "sub": "자산운용·인프라",
+     "stocks": [
+      {
+       "ticker": "BLK",
+       "name": "블랙록",
+       "country": "US",
+       "role": "자산운용"
+      },
+      {
+       "ticker": "CME",
+       "name": "CME그룹",
+       "country": "US",
+       "role": "거래소"
+      }
+     ]
+    }
+   ],
+   "flow": false,
+   "kind": "업종 구분"
+  },
+  {
+   "name": "지주",
+   "stages": [
+    {
+     "order": 1,
+     "name": "삼성",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "028260",
+       "name": "삼성물산",
+       "country": "KR",
+       "role": "사실상 지주·건설·상사"
+      },
+      {
+       "ticker": "005930",
+       "name": "삼성전자",
+       "country": "KR",
+       "role": "반도체·스마트폰"
+      },
+      {
+       "ticker": "032830",
+       "name": "삼성생명",
+       "country": "KR",
+       "role": "생명보험"
+      },
+      {
+       "ticker": "207940",
+       "name": "삼성바이오로직스",
+       "country": "KR",
+       "role": "바이오 CDMO"
+      },
+      {
+       "ticker": "006400",
+       "name": "삼성SDI",
+       "country": "KR",
+       "role": "배터리"
+      }
+     ]
+    },
+    {
+     "order": 2,
+     "name": "SK",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "034730",
+       "name": "SK",
+       "country": "KR",
+       "role": "지주사"
+      },
+      {
+       "ticker": "000660",
+       "name": "SK하이닉스",
+       "country": "KR",
+       "role": "메모리"
+      },
+      {
+       "ticker": "402340",
+       "name": "SK스퀘어",
+       "country": "KR",
+       "role": "중간지주(하이닉스)"
+      },
+      {
+       "ticker": "017670",
+       "name": "SK텔레콤",
+       "country": "KR",
+       "role": "통신"
+      },
+      {
+       "ticker": "096770",
+       "name": "SK이노베이션",
+       "country": "KR",
+       "role": "정유·배터리"
+      }
+     ]
+    },
+    {
+     "order": 3,
+     "name": "LG",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "003550",
+       "name": "LG",
+       "country": "KR",
+       "role": "지주사"
+      },
+      {
+       "ticker": "066570",
+       "name": "LG전자",
+       "country": "KR",
+       "role": "가전"
+      },
+      {
+       "ticker": "051910",
+       "name": "LG화학",
+       "country": "KR",
+       "role": "화학·배터리 소재"
+      },
+      {
+       "ticker": "373220",
+       "name": "LG에너지솔루션",
+       "country": "KR",
+       "role": "배터리"
+      },
+      {
+       "ticker": "032640",
+       "name": "LG유플러스",
+       "country": "KR",
+       "role": "통신"
+      }
+     ]
+    },
+    {
+     "order": 4,
+     "name": "현대차",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "005380",
+       "name": "현대차",
+       "country": "KR",
+       "role": "완성차"
+      },
+      {
+       "ticker": "000270",
+       "name": "기아",
+       "country": "KR",
+       "role": "완성차"
+      },
+      {
+       "ticker": "012330",
+       "name": "현대모비스",
+       "country": "KR",
+       "role": "부품(사실상 지배 축)"
+      },
+      {
+       "ticker": "086280",
+       "name": "현대글로비스",
+       "country": "KR",
+       "role": "물류"
+      }
+     ]
+    },
+    {
+     "order": 5,
+     "name": "한화",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "000880",
+       "name": "한화",
+       "country": "KR",
+       "role": "지주사"
+      },
+      {
+       "ticker": "012450",
+       "name": "한화에어로스페이스",
+       "country": "KR",
+       "role": "방산·중간지주"
+      },
+      {
+       "ticker": "042660",
+       "name": "한화오션",
+       "country": "KR",
+       "role": "조선"
+      },
+      {
+       "ticker": "272210",
+       "name": "한화시스템",
+       "country": "KR",
+       "role": "방산전자"
+      },
+      {
+       "ticker": "009830",
+       "name": "한화솔루션",
+       "country": "KR",
+       "role": "태양광·화학"
+      },
+      {
+       "ticker": "088350",
+       "name": "한화생명",
+       "country": "KR",
+       "role": "생명보험"
+      }
+     ]
+    },
+    {
+     "order": 6,
+     "name": "HD현대",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "267250",
+       "name": "HD현대",
+       "country": "KR",
+       "role": "지주사"
+      },
+      {
+       "ticker": "009540",
+       "name": "HD한국조선해양",
+       "country": "KR",
+       "role": "조선 중간지주"
+      },
+      {
+       "ticker": "329180",
+       "name": "HD현대중공업",
+       "country": "KR",
+       "role": "조선"
+      },
+      {
+       "ticker": "267260",
+       "name": "HD현대일렉트릭",
+       "country": "KR",
+       "role": "전력기기"
+      },
+      {
+       "ticker": "443060",
+       "name": "HD현대마린솔루션",
+       "country": "KR",
+       "role": "선박 AM"
+      }
+     ]
+    },
+    {
+     "order": 7,
+     "name": "LS",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "006260",
+       "name": "LS",
+       "country": "KR",
+       "role": "지주사"
+      },
+      {
+       "ticker": "010120",
+       "name": "LS ELECTRIC",
+       "country": "KR",
+       "role": "전력기기"
+      },
+      {
+       "ticker": "229640",
+       "name": "LS에코에너지",
+       "country": "KR",
+       "role": "전선(베트남)"
+      }
+     ]
+    },
+    {
+     "order": 8,
+     "name": "두산",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "000150",
+       "name": "두산",
+       "country": "KR",
+       "role": "지주사"
+      },
+      {
+       "ticker": "034020",
+       "name": "두산에너빌리티",
+       "country": "KR",
+       "role": "원전·가스터빈"
+      },
+      {
+       "ticker": "241560",
+       "name": "두산밥캣",
+       "country": "KR",
+       "role": "건설장비"
+      },
+      {
+       "ticker": "454910",
+       "name": "두산로보틱스",
+       "country": "KR",
+       "role": "협동로봇"
+      }
+     ]
+    },
+    {
+     "order": 9,
+     "name": "CJ",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "001040",
+       "name": "CJ",
+       "country": "KR",
+       "role": "지주사"
+      },
+      {
+       "ticker": "097950",
+       "name": "CJ제일제당",
+       "country": "KR",
+       "role": "식품·바이오"
+      },
+      {
+       "ticker": "000120",
+       "name": "CJ대한통운",
+       "country": "KR",
+       "role": "물류"
+      },
+      {
+       "ticker": "035760",
+       "name": "CJ ENM",
+       "country": "KR",
+       "role": "미디어"
+      }
+     ]
+    },
+    {
+     "order": 10,
+     "name": "롯데",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "004990",
+       "name": "롯데지주",
+       "country": "KR",
+       "role": "지주사"
+      },
+      {
+       "ticker": "023530",
+       "name": "롯데쇼핑",
+       "country": "KR",
+       "role": "유통"
+      },
+      {
+       "ticker": "011170",
+       "name": "롯데케미칼",
+       "country": "KR",
+       "role": "화학"
+      },
+      {
+       "ticker": "280360",
+       "name": "롯데웰푸드",
+       "country": "KR",
+       "role": "식품"
+      },
+      {
+       "ticker": "005300",
+       "name": "롯데칠성",
+       "country": "KR",
+       "role": "음료"
+      }
+     ]
+    },
+    {
+     "order": 11,
+     "name": "포스코",
+     "sub": "지주사·핵심 상장 자회사",
+     "stocks": [
+      {
+       "ticker": "005490",
+       "name": "POSCO홀딩스",
+       "country": "KR",
+       "role": "지주사"
+      },
+      {
+       "ticker": "003670",
+       "name": "포스코퓨처엠",
+       "country": "KR",
+       "role": "배터리 소재"
+      },
+      {
+       "ticker": "047050",
+       "name": "포스코인터내셔널",
+       "country": "KR",
+       "role": "상사·LNG"
+      },
+      {
+       "ticker": "022100",
+       "name": "포스코DX",
+       "country": "KR",
+       "role": "IT·물류자동화"
+      }
+     ]
+    }
+   ],
+   "flow": false,
+   "kind": "그룹 구분"
   }
  ]
 }

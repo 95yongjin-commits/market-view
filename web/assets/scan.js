@@ -19,11 +19,14 @@
     }
     function renderVC() {
       if (!vcData) return ($("#vcFlow").innerHTML = `<div class="err">밸류체인 데이터를 불러오지 못했습니다.</div>`);
-      const sec = vcData.sectors[VC.sec], key = VKEY[VC.per];
+      const sec = vcData.sectors[VC.sec], key = VKEY[VC.per], flow = sec.flow !== false;
+      $("#vcFlow").classList.toggle("noflow", !flow);
+      $("#vcHint").textContent = flow ? "단계는 공정 순서(왼쪽 → 오른쪽)이고, 칸 색이 진할수록 등락폭이 큽니다. 종목을 누르면 차트가 열립니다."
+        : `${sec.name}은 공정 순서가 아니라 ${sec.kind || "구분"}입니다. 칸 색이 진할수록 등락폭이 크고, 종목을 누르면 차트가 열립니다.`;
       $("#asof-vc").innerHTML = `갱신 ${vcData.updated} · <span class="stale">${esc(vcData.note || "초안")}</span>` + staleBadge("valuechain");
       const stages = sec.stages.map((st) => ({ ...st, med: median(st.stocks.map((s) => s[key])) }));
       const mx = Math.max(0.5, ...stages.map((s) => Math.abs(s.med || 0)));
-      $("#vcStrength").innerHTML = `<div class="vs-t">단계별 강도 <span class="muted">(중앙값)</span></div><div class="vs-row">` + stages.map((st) => {
+      $("#vcStrength").innerHTML = `<div class="vs-t">${flow ? "단계별" : esc(sec.kind || "구분") + "별"} 강도 <span class="muted">(중앙값)</span></div><div class="vs-row">` + stages.map((st) => {
         const w = isN(st.med) ? (Math.abs(st.med) / mx) * 100 : 0;
         return `<div class="vs"><span class="vs-n">${esc(st.name)}</span><span class="vs-bar"><i class="${cls(st.med)}" style="width:${Math.max(w, 3)}%"></i></span><b class="${cls(st.med)}">${pct(st.med, 1)}</b></div>`;
       }).join("") + "</div>";
@@ -32,8 +35,8 @@
         const us = st.stocks.filter((s) => s.country === "US").sort((a, b) => (b[key] ?? -1e9) - (a[key] ?? -1e9));
         const tile = (s) => `<button type="button" class="vt" data-t="${esc(s.ticker)}" style="${heat(s[key])}" title="${esc(s.role || "")}">
             <span class="vt-n">${esc(s.name)}</span><span class="vt-p">${pct(s[key])}</span><span class="vt-r">${esc(s.role || "")}</span></button>`;
-        return `${i ? '<div class="vc-arrow">›</div>' : ""}<div class="vc-col">
-          <div class="vc-h"><span class="vc-no">${i + 1}</span><b>${esc(st.name)}</b><span class="${cls(st.med)}">${pct(st.med, 1)}</span></div>
+        return `${i && flow ? '<div class="vc-arrow">›</div>' : ""}<div class="vc-col">
+          <div class="vc-h">${flow ? `<span class="vc-no">${i + 1}</span>` : ""}<b>${esc(st.name)}</b><span class="${cls(st.med)}">${pct(st.med, 1)}</span></div>
           <div class="vc-sub">${esc(st.sub || "")}</div>
           ${kr.length ? `<div class="vc-ctry">국내</div>${kr.map(tile).join("")}` : ""}
           ${us.length ? `<div class="vc-ctry">미국</div>${us.map(tile).join("")}` : ""}</div>`;

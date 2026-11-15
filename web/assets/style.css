@@ -393,3 +393,4 @@ html, body { overflow-x: hidden; }
 .fib-lv span:not(.muted){display:inline-block;margin-right:10px;font-variant-numeric:tabular-nums}
 .fib-lv span.on{color:#f5a524;font-weight:700}
 .sc-settings select.sel{margin-left:6px;padding:3px 6px}
+.vc-flow.noflow { gap: 10px; }
