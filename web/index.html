@@ -12,7 +12,7 @@
   })();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<link rel="stylesheet" href="assets/style.css?v=7">
+<link rel="stylesheet" href="assets/style.css?v=8">
 </head>
 <body>
 <header class="top">
@@ -30,6 +30,7 @@
     </button>
   </div>
   <nav class="wrap nav" id="nav">
+    <a href="#sec-guide">오늘의 체크</a>
     <a href="#sec-index">지수</a>
     <a href="#sec-macro">환율·금리</a>
     <a href="#sec-cal">일정</a>
@@ -45,6 +46,17 @@
 <div class="tape-wrap"><div class="wrap tape" id="tape"></div></div>
 
 <main class="wrap">
+  <section id="sec-guide" class="sec">
+    <div class="sec-h"><h2>오늘의 시장 체크</h2><span class="asof">지표로 자동 판정 · 각 카드의 '볼 곳'에서 바로 확인</span></div>
+    <div class="gd-sum" id="gdSummary"></div>
+    <div class="gd-grid" id="gdRegime"><div class="err">불러오는 중…</div></div>
+    <div class="sec-h" style="margin-top:22px"><h3 class="h3">WM지원팀 추천 영상·자료</h3></div>
+    <div class="controls"><div class="seg" id="lkTags" style="display:none"></div></div>
+    <div class="lk-grid" id="lkGrid"></div>
+    <button class="more" id="lkMore" type="button">더 보기</button>
+    <p class="hint">국면 판정은 정해진 숫자 기준에 따른 참고용이며 투자 권유가 아닙니다. 추천 영상·자료는 외부 제작물로 당사 의견과 다를 수 있습니다.</p>
+  </section>
+
   <section id="sec-index" class="sec">
     <div class="sec-h"><h2>주요 지수</h2><span class="asof" id="asof-index"></span></div>
     <div id="indices"></div>
@@ -177,5 +189,6 @@
 <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modalBox" role="dialog"></div></div>
 <script src="assets/app.js?v=5"></script>
 <script src="assets/scan.js?v=3"></script>
+<script src="assets/guide.js?v=1"></script>
 </body>
 </html>

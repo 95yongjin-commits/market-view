@@ -1,0 +1,71 @@
+name: 추천 링크 게시 (텔레그램)
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # 30분마다 봇 메시지 확인 (GitHub 사정상 지연될 수 있음)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# 확인 작업은 30분마다 돌기 때문에 본 갱신(update.yml)과 대기열을 공유하지 않는다.
+# 실제 배포(deploy)만 pages 그룹에 넣어 동시 배포를 막는다.
+concurrency:
+  group: links
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.poll.outputs.changed }}
+    env:
+      TZ: Asia/Seoul
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: 봇 메시지 확인
+        id: poll
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/links.py poll
+      - name: 저장소 커밋
+        if: steps.poll.outputs.updates == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add store/links.json
+          git diff --cached --quiet || git commit -m "추천 링크 갱신 [skip ci]"
+          git pull --rebase -q && git push -q
+      - name: 링크 섹션만 갱신 (나머지는 직전 배포본 유지)
+        if: steps.poll.outputs.changed == 'true'
+        run: |
+          pip install -q -r requirements.txt
+          python scripts/collect.py --out web/data --only links --prev "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data"
+      - if: steps.poll.outputs.changed == 'true'
+        uses: actions/configure-pages@v5
+      - if: steps.poll.outputs.changed == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.changed == 'true'
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

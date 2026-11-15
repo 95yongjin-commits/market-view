@@ -524,6 +524,11 @@ def _valuechain():
     return collect_valuechain(CTX)
 
 
+def _links():
+    from links import collect_links
+    return collect_links(CTX)
+
+
 SECTIONS = {
     "global": collect_global,
     "rates": collect_rates_fx,
@@ -536,6 +541,7 @@ SECTIONS = {
     "scan": _scan,
     "scan_ath": _scan_ath,
     "news": collect_news,
+    "links": _links,
 }
 
 
