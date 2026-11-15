@@ -97,7 +97,13 @@
         $("#lkMore").style.display = "none";
         return;
       }
-      $("#lkGrid").innerHTML = rows.slice(0, L.limit).map((x) => `<a class="lk" href="${esc(x.url)}" target="_blank" rel="noopener">
+      $("#lkGrid").innerHTML = rows.slice(0, L.limit).map((x) => x.kind === "image" ? `<a class="lk" href="${esc(x.imgs[0])}" data-img="${esc(x.id)}">
+          <span class="lk-img"><img loading="lazy" src="${esc(x.imgs[0])}" alt="">${x.imgs.length > 1 ? `<i class="lk-play">+${x.imgs.length - 1}장</i>` : ""}</span>
+          <span class="lk-b"><span class="lk-t">${esc(x.title || "사진")}</span>
+          <span class="lk-s">🖼 사진 · ${esc((x.posted || "").slice(5, 10).replace("-", "/"))}</span>
+          ${x.comment ? `<span class="lk-c">${esc(x.comment)}</span>` : ""}
+          ${(x.tags || []).length ? `<span class="lk-g">${x.tags.map((t) => `#${esc(t)}`).join(" ")}</span>` : ""}</span></a>`
+        : `<a class="lk" href="${esc(x.url)}" target="_blank" rel="noopener">
           ${x.thumb ? `<span class="lk-img"><img loading="lazy" src="${esc(x.thumb)}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.remove()">${x.kind === "youtube" ? '<i class="lk-play">▶</i>' : ""}</span>` : ""}
           <span class="lk-b"><span class="lk-t">${esc(x.title || x.site || x.url)}</span>
           <span class="lk-s">${esc(x.source || x.site || "")} · ${esc((x.posted || "").slice(5, 10).replace("-", "/"))}</span>
@@ -109,6 +115,21 @@
     Promise.all(["global", "rates", "korea", "calendar"].map(get)).then(([g, r, k, cal]) => renderRegime(g, r, k, cal));
     get("links").then((d) => { links = (d && d.items) || []; renderLinks(); });
     $("#lkMore").onclick = () => { L.limit += 9; renderLinks(); };
+    // 사진 게시물: 크게 보기 (여러 장이면 세로로)
+    $("#lkGrid").addEventListener("click", (e) => {
+      const a = e.target.closest("[data-img]");
+      if (!a) return;
+      e.preventDefault();
+      const x = links.find((q) => q.id === a.dataset.img);
+      if (!x) return;
+      $("#modalBox").innerHTML = `<div class="m-h"><div><h3>${esc(x.title || "사진")}</h3><div class="s">WM지원팀 · ${esc(x.posted || "")}</div></div>
+        <button type="button" class="m-x" id="mClose">✕</button></div>
+        ${x.comment ? `<p class="lk-c" style="margin:8px 0">${esc(x.comment)}</p>` : ""}
+        <div class="lk-view">${x.imgs.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt=""></a>`).join("")}</div>
+        ${x.url ? `<a class="m-link" href="${esc(x.url)}" target="_blank" rel="noopener">관련 링크 ↗</a>` : ""}`;
+      $("#modal").classList.add("show");
+      $("#mClose").onclick = () => $("#modal").classList.remove("show");
+    });
   }
   if (window.MV) start(); else document.addEventListener("mv:ready", start, { once: true });
 })();

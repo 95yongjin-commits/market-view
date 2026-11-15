@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths-ignore: ["store/**"]
+    paths-ignore: ["store/**", "web/uploads/**"]
 
 permissions:
   contents: read

@@ -432,3 +432,5 @@ b.lv-warm, .gd.lv-warm .gd-h b { color: #f5a524; }
 .foot .disc > b { color: var(--ink-2); font-size: 12.5px; }
 .foot .disc ol { margin: 4px 0 0; padding-left: 18px; }
 .foot .disc li b { color: var(--ink-2); }
+.lk-view { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.lk-view img { width: 100%; height: auto; border-radius: 8px; display: block; border: 1px solid var(--line); }
