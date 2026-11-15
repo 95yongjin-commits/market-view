@@ -1,3 +1,4 @@
+/*! Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11 */
 /* 섹터 밸류체인 + 차트 포착기 (app.js 의 window.MV 공용 함수 사용) */
 (function () {
   "use strict";

@@ -1,3 +1,4 @@
+# Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11
 """주간 일정(미국 실적·경제지표·국내 만기일) / 국내 공매도.
 
 collect.py 에서 섹션 'calendar', 'short' 로 호출된다.

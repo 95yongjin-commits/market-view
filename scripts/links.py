@@ -1,3 +1,4 @@
+# Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11
 """텔레그램 봇으로 받은 추천 링크(유튜브·웹)를 사이트에 게시한다.
 
     python scripts/links.py poll     # 봇에 새로 온 메시지 처리 → store/links.json 갱신
