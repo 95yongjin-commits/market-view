@@ -425,3 +425,10 @@ b.lv-warm, .gd.lv-warm .gd-h b { color: #f5a524; }
 .lk-s { font-size: 12px; color: var(--muted); }
 .lk-c { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
 .lk-g { font-size: 12px; color: var(--accent); }
+
+/* 사내 한정 표시 · 유의사항 */
+.brand .internal { display: inline-block; font-size: 11px; font-weight: 700; color: #e5484d; border: 1px solid color-mix(in srgb, #e5484d 55%, transparent); background: color-mix(in srgb, #e5484d 10%, transparent); border-radius: 5px; padding: 1px 6px; vertical-align: 2px; letter-spacing: 0; white-space: nowrap; }
+.foot .disc { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; line-height: 1.6; }
+.foot .disc > b { color: var(--ink-2); font-size: 12.5px; }
+.foot .disc ol { margin: 4px 0 0; padding-left: 18px; }
+.foot .disc li b { color: var(--ink-2); }
