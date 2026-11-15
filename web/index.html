@@ -12,7 +12,7 @@
   })();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<link rel="stylesheet" href="assets/style.css?v=3">
+<link rel="stylesheet" href="assets/style.css?v=4">
 </head>
 <body>
 <header class="top">
@@ -32,6 +32,7 @@
   <nav class="wrap nav" id="nav">
     <a href="#sec-index">지수</a>
     <a href="#sec-macro">환율·금리</a>
+    <a href="#sec-cal">일정</a>
     <a href="#sec-sector">섹터</a>
     <a href="#sec-stocks">섹터별 종목</a>
     <a href="#sec-flow">수급</a>
@@ -50,6 +51,15 @@
   <section id="sec-macro" class="sec">
     <div class="sec-h"><h2>환율 · 금리 · 원자재</h2><span class="asof" id="asof-macro"></span></div>
     <div class="grid3" id="macro"></div>
+  </section>
+
+  <section id="sec-cal" class="sec">
+    <div class="sec-h"><h2>주요 일정</h2><span class="asof" id="asof-cal"></span></div>
+    <div class="controls"><div class="seg" id="calWeek"></div><span class="muted sm-txt">시간은 한국시간(KST) · ● 핵심 지표</span></div>
+    <div class="cal-grid">
+      <div class="card"><div class="card-h"><h3>경제지표 · 이벤트</h3></div><div id="calEvents"></div></div>
+      <div class="card"><div class="card-h"><h3>미국 주요 기업 실적발표</h3><span class="muted sm-txt">시총 300억$ 이상</span></div><div id="calEarn"></div></div>
+    </div>
   </section>
 
   <section id="sec-sector" class="sec">
@@ -97,6 +107,17 @@
         <div id="topTable"></div>
       </div>
     </div>
+    <div class="card short-card">
+      <div class="card-h">
+        <h3>공매도 <span class="muted sm-txt" id="shortInfo"></span></h3>
+        <div class="ctrl-row">
+          <div class="seg sm" id="shMkt"></div>
+          <div class="seg sm" id="shView"></div>
+        </div>
+      </div>
+      <div id="shortTable"></div>
+      <p class="hint" id="shortHint"></p>
+    </div>
   </section>
 
   <section id="sec-news" class="sec">
@@ -119,6 +140,6 @@
 
 <div class="tip" id="tip"></div>
 <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modalBox" role="dialog"></div></div>
-<script src="assets/app.js?v=3"></script>
+<script src="assets/app.js?v=4"></script>
 </body>
 </html>

@@ -402,6 +402,66 @@
     $("#newsMore").onclick = () => { NW.limit += 60; renderNews(); };
   }
 
+  /* ── 주요 일정 ─────────────────────────────────────── */
+  const CAL = { week: 0 };
+  const md = (iso) => { const d = new Date(iso + "T00:00:00"); return `${d.getMonth() + 1}/${d.getDate()} (${WD[d.getDay()]})`; };
+  function renderCal() {
+    const c = D.calendar;
+    if (!c) { $("#calEvents").innerHTML = $("#calEarn").innerHTML = `<p class="empty-s">일정을 불러오지 못했습니다.</p>`; return; }
+    $("#asof-cal").innerHTML = `갱신 ${c.updated} · 출처 Nasdaq 캘린더` + staleBadge("calendar");
+    const days = c.days.slice(CAL.week * 5, CAL.week * 5 + 5);
+    const dayHead = (d) => `<div class="cal-day ${d < c.today ? "past" : ""}">${md(d)}${d === c.today ? '<span class="today">오늘</span>' : ""}</div>`;
+    $("#calEvents").innerHTML = days.map((d) => {
+      const ev = c.events.filter((e) => e.date === d);
+      return dayHead(d) + (ev.length ? ev.map((e) => {
+        const v = [e.actual ? `실제 <b>${esc(e.actual)}</b>` : "", e.consensus ? `예상 ${esc(e.consensus)}` : "", e.previous ? `이전 ${esc(e.previous)}` : ""].filter(Boolean).join(" · ");
+        return `<div class="ev ${e.w >= 2 ? "hi" : ""}"><span class="tm">${esc(e.kst || "")}</span><span class="ct">${esc(e.country)}</span>
+          <span class="nm">${esc(e.name)}${e.en ? `<small>${esc(e.en)}</small>` : ""}</span><span class="vals">${v}</span></div>`;
+      }).join("") : `<p class="empty-s">주요 일정 없음</p>`);
+    }).join("");
+    $("#calEarn").innerHTML = days.map((d) => {
+      const er = c.earnings.filter((e) => e.date === d);
+      const nd = new Date(d + "T00:00:00"); nd.setDate(nd.getDate() + 1);
+      return dayHead(d) + (er.length ? er.map((e) => {
+        const kst = e.when === "장전" ? "한국 당일 밤" : e.when === "장후" ? `한국 ${nd.getMonth() + 1}/${nd.getDate()} 새벽` : "";
+        return `<div class="er"><span class="nm">${e.when ? `<span class="when">${e.when}</span>` : ""}${esc(e.name)}<small>${esc(e.ticker)}</small></span>
+          <span class="rt">${e.eps_f ? `EPS 예상 ${esc(e.eps_f)}` : ""}${kst ? ` · ${kst}` : ""}</span></div>`;
+      }).join("") : `<p class="empty-s">주요 실적 없음</p>`);
+    }).join("");
+  }
+
+  /* ── 공매도 ───────────────────────────────────────── */
+  const SH = { mkt: "KOSPI", view: "trade" };
+  function renderShort() {
+    const s = D.short;
+    if (!s) return ($("#shortTable").innerHTML = `<p class="empty-s">공매도 데이터를 불러오지 못했습니다.</p>`);
+    const m = s.markets[SH.mkt];
+    if (!m) return ($("#shortTable").innerHTML = `<p class="empty-s">데이터 없음</p>`);
+    $("#shortInfo").innerHTML = `· ${SH.mkt} 당일 공매도 거래대금 비중 <b>${isN(m.total_ratio) ? m.total_ratio.toFixed(2) + "%" : "–"}</b>` + staleBadge("short");
+    const amt = (v) => (isN(v) ? Math.round(v).toLocaleString("en-US") : "–");
+    let rows, head, hint;
+    if (SH.view === "trade") {
+      hint = `${s.date} 기준 · 전체 거래대금 중 공매도 비중 · 시총 3,000억 이상`;
+      head = `<th>#</th><th style="text-align:left">종목</th><th>공매도 비중</th><th>공매도 금액(억)</th><th>등락률</th>`;
+      rows = m.trade.map((r, i) => `<tr><td class="muted">${i + 1}</td><td class="nm">${esc(r.name)}<span class="tk">${r.ticker}</span></td>
+        <td class="v">${r.ratio.toFixed(2)}%</td><td>${amt(r.value)}</td><td>${span(pct(r.r1d), r.r1d)}</td></tr>`);
+    } else {
+      const b = m.balance;
+      hint = `잔고는 2거래일 뒤 공시되어 ${b.date || "–"} 기준입니다 · 변화는 5거래일 전 대비(%p) · 시총 3,000억 이상`;
+      head = `<th>#</th><th style="text-align:left">종목</th><th>잔고 비중</th><th>1주 변화</th><th>잔고 금액(억)</th><th>등락률</th>`;
+      rows = (b[SH.view] || []).map((r, i) => `<tr><td class="muted">${i + 1}</td><td class="nm">${esc(r.name)}<span class="tk">${r.ticker}</span></td>
+        <td class="v">${r.ratio.toFixed(2)}%</td><td>${isN(r.chg) ? span(sgn(r.chg) + r.chg.toFixed(2) + "%p", r.chg) : "–"}</td>
+        <td>${amt(r.value)}</td><td>${span(pct(r.r1d), r.r1d)}</td></tr>`);
+    }
+    $("#shortTable").innerHTML = rows.length ? `<table class="t"><thead><tr>${head}</tr></thead><tbody>${rows.join("")}</tbody></table>` : `<p class="empty-s">데이터 없음</p>`;
+    $("#shortHint").textContent = hint;
+  }
+  function initCalShort() {
+    seg($("#calWeek"), [{ k: "0", l: "이번 주" }, { k: "1", l: "다음 주" }], "0", (k) => { CAL.week = +k; renderCal(); });
+    seg($("#shMkt"), [{ k: "KOSPI", l: "코스피" }, { k: "KOSDAQ", l: "코스닥" }], SH.mkt, (k) => { SH.mkt = k; renderShort(); });
+    seg($("#shView"), [{ k: "trade", l: "거래 비중" }, { k: "top", l: "잔고 비중" }, { k: "up", l: "잔고 증가" }, { k: "down", l: "잔고 감소" }], SH.view, (k) => { SH.view = k; renderShort(); });
+  }
+
   /* ── 네비게이션 하이라이트 ─────────────────────────── */
   function initNav() {
     const links = [...document.querySelectorAll("#nav a")];
@@ -415,16 +475,16 @@
 
   /* ── 부트 ─────────────────────────────────────────── */
   function renderAll() {
-    renderTape(); renderIndices(); renderMacro(); renderSector(); renderStocks(); renderFlow(); renderNews();
+    renderTape(); renderIndices(); renderMacro(); renderSector(); renderStocks(); renderFlow(); renderNews(); renderCal(); renderShort();
     const m = D.meta;
     $("#updated").textContent = m ? `최종 갱신 ${m.updated} (KST) · 평일 자동 업데이트` : "갱신 정보 없음";
   }
   const get = (n) => fetch(`data/${n}.json${NC}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 
-  initTheme(); initNav(); initFlowControls(); initNewsControls(); initStockControls();
+  initTheme(); initNav(); initFlowControls(); initNewsControls(); initStockControls(); initCalShort();
   seg($("#secUni"), UNIS, SEC.uni, (k) => { SEC.uni = k; renderSector(); });
-  Promise.all(["meta", "global", "rates", "korea", "news"].map(get)).then(([meta, g, r, k, n]) => {
-    Object.assign(D, { meta, global: g, rates: r, korea: k, news: n });
+  Promise.all(["meta", "global", "rates", "korea", "news", "calendar", "short"].map(get)).then(([meta, g, r, k, n, cal, sh]) => {
+    Object.assign(D, { meta, global: g, rates: r, korea: k, news: n, calendar: cal, short: sh });
     renderAll();
   });
   // 종목 카드 데이터는 용량이 커서 따로 받아 그린다

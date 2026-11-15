@@ -499,10 +499,22 @@ def _stocks_global():
     return collect_stocks_global(CTX)
 
 
+def _calendar():
+    from extras import collect_calendar
+    return collect_calendar(CTX)
+
+
+def _short():
+    from extras import collect_short
+    return collect_short(CTX)
+
+
 SECTIONS = {
     "global": collect_global,
     "rates": collect_rates_fx,
+    "calendar": _calendar,
     "korea": collect_korea,
+    "short": _short,
     "stocks_kr": _stocks_kr,
     "stocks_global": _stocks_global,
     "news": collect_news,

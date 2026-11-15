@@ -294,3 +294,36 @@ html, body { overflow-x: hidden; }
 .brand .org { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0; }
 .foot .contact { font-size: 13px; color: var(--ink-2); padding: 12px 14px; margin-bottom: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
 .foot .contact b { color: var(--ink); }
+
+/* ── 일정 ─────────────────────────────────────────────── */
+.cal-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+.cal-day { font-size: 12.5px; font-weight: 700; color: var(--ink-2); padding: 10px 0 6px; border-bottom: 1px solid var(--line); display: flex; gap: 8px; align-items: center; }
+.cal-day:first-child { padding-top: 0; }
+.cal-day .today { font-size: 11px; color: #fff; background: var(--accent); border-radius: 4px; padding: 0 6px; }
+.cal-day.past { color: var(--faint); }
+.ev { display: grid; grid-template-columns: 82px 44px 1fr auto; gap: 8px; align-items: baseline; padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 13px; }
+.ev:last-child { border-bottom: 0; }
+.ev .tm { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.ev .ct { font-size: 11px; color: var(--muted); border: 1px solid var(--line-2); border-radius: 4px; text-align: center; padding: 0 2px; }
+.ev .nm { font-weight: 500; min-width: 0; }
+.ev .nm small { display: block; font-size: 11px; color: var(--faint); font-weight: 400; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ev.hi .nm { font-weight: 700; }
+.ev.hi .nm::before { content: "● "; color: var(--accent); font-size: 10px; }
+.ev .vals { font-size: 11.5px; color: var(--muted); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ev .vals b { color: var(--ink); font-weight: 700; }
+.er { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 13px; align-items: baseline; }
+.er:last-child { border-bottom: 0; }
+.er .nm { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.er .nm small { font-size: 11px; color: var(--muted); font-weight: 500; margin-left: 5px; }
+.er .rt { font-size: 11.5px; color: var(--muted); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.er .when { display: inline-block; font-size: 11px; border-radius: 4px; padding: 0 5px; margin-right: 6px; background: var(--bg-2); border: 1px solid var(--line); color: var(--ink-2); }
+.empty-s { color: var(--muted); font-size: 12.5px; padding: 8px 0; }
+/* ── 공매도 ───────────────────────────────────────────── */
+.short-card { margin-top: 12px; }
+@media (max-width: 1000px) { .cal-grid { grid-template-columns: 1fr; } }
+@media (max-width: 680px) {
+  .ev { grid-template-columns: 70px 1fr; }
+  .ev .ct { display: none; }
+  .ev .vals { grid-column: 2; text-align: left; }
+  #shortTable .t th:nth-child(5), #shortTable .t td:nth-child(5) { display: none; }
+}
