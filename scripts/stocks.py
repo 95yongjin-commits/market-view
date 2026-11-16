@@ -95,7 +95,15 @@ def collect_stocks_kr(ctx: dict) -> dict:
     base = base[base["mcap"] > 0].sort_values("mcap", ascending=False)
     base["rank"] = range(1, len(base) + 1)
 
-    wics = _wics_members(d0)
+    # WICS 는 그날 구성종목을 장 마감 이후(보통 다음 날)에 공개한다 → 당일이 비어 있으면 직전 날짜로
+    wics = {}
+    for back in range(0, 8):
+        dt = (pd.Timestamp(d0) - pd.Timedelta(days=back)).strftime("%Y%m%d")
+        wics = _wics_members(dt)
+        if len(wics) >= 500:
+            if back:
+                log(f"WICS 분류: {d0} 미공개 → {dt} 기준 사용")
+            break
     if len(wics) < 500:
         raise RuntimeError(f"WICS 분류 수신 부족({len(wics)})")
     base["sector"] = [wics.get(t) for t in base.index]
