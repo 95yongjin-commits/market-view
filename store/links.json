@@ -1,7 +1,18 @@
 {
- "rev": 1,
- "offset": 353965557,
+ "rev": 2,
+ "offset": 353965558,
  "items": [
+  {
+   "kind": "youtube",
+   "vid": "9e-V_r0N-qI",
+   "url": "https://www.youtube.com/watch?v=9e-V_r0N-qI",
+   "thumb": "https://i.ytimg.com/vi/9e-V_r0N-qI/mqdefault.jpg",
+   "site": "YouTube",
+   "title": "미국의 중국 반도체 압박 본격화? 엔비디아 논란 이후 삼성전자·SK하이닉스, 기회되나 | 여도은, 노근창 세미콘리서치랩 대표 [글로벌 인터뷰]",
+   "source": "삼프로TV 3PROTV",
+   "posted": "2026-11-16 12:01",
+   "id": "6-0"
+  },
   {
    "kind": "youtube",
    "vid": "t8OJHL6q3T4",
