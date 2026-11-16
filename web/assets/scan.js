@@ -24,7 +24,7 @@
       $("#vcFlow").classList.toggle("noflow", !flow);
       $("#vcHint").textContent = flow ? "단계는 공정 순서(왼쪽 → 오른쪽)이고, 칸 색이 진할수록 등락폭이 큽니다. 종목을 누르면 차트가 열립니다."
         : `${sec.name}은 공정 순서가 아니라 ${sec.kind || "구분"}입니다. 칸 색이 진할수록 등락폭이 크고, 종목을 누르면 차트가 열립니다.`;
-      $("#asof-vc").innerHTML = `갱신 ${vcData.updated} · <span class="stale">${esc(vcData.note || "초안")}</span>` + staleBadge("valuechain");
+      $("#asof-vc").innerHTML = `갱신 ${vcData.updated}` + staleBadge("valuechain");
       const stages = sec.stages.map((st) => ({ ...st, med: median(st.stocks.map((s) => s[key])) }));
       const mx = Math.max(0.5, ...stages.map((s) => Math.abs(s.med || 0)));
       $("#vcStrength").innerHTML = `<div class="vs-t">${flow ? "단계별" : esc(sec.kind || "구분") + "별"} 강도 <span class="muted">(중앙값)</span></div><div class="vs-row">` + stages.map((st) => {

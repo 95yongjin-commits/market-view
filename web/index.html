@@ -14,7 +14,7 @@
   })();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<link rel="stylesheet" href="assets/style.css?v=11">
+<link rel="stylesheet" href="assets/style.css?v=12">
 </head>
 <body>
 <header class="top">
@@ -49,10 +49,10 @@
 
 <main class="wrap">
   <section id="sec-guide" class="sec">
-    <div class="sec-h"><h2>오늘의 시장 체크</h2><span class="asof">지표로 자동 판정 · 각 카드의 '볼 곳'에서 바로 확인</span></div>
+    <div class="sec-h"><h2>오늘의 시장 체크</h2><span class="asof">지표로 자동 판정 · 각 카드의 '볼 곳'에서 바로 확인</span><span class="cad" title="자동 업데이트 주기">⟳ 평일 하루 7번 · 시간표는 맨 아래</span></div>
     <div class="gd-sum" id="gdSummary"></div>
     <div class="gd-grid" id="gdRegime"><div class="err">불러오는 중…</div></div>
-    <div class="sec-h" style="margin-top:22px"><h3 class="h3">WM지원팀 추천 영상·자료</h3></div>
+    <div class="sec-h" style="margin-top:22px"><h3 class="h3">WM지원팀 추천 영상·자료</h3><span class="cad" title="자동 업데이트 주기">⟳ 매일 30분마다</span></div>
     <div class="controls"><div class="seg" id="lkTags" style="display:none"></div></div>
     <div class="lk-grid" id="lkGrid"></div>
     <button class="more" id="lkMore" type="button">더 보기</button>
@@ -60,17 +60,17 @@
   </section>
 
   <section id="sec-index" class="sec">
-    <div class="sec-h"><h2>주요 지수</h2><span class="asof" id="asof-index"></span></div>
+    <div class="sec-h"><h2>주요 지수</h2><span class="asof" id="asof-index"></span><span class="cad" title="자동 업데이트 주기">⟳ 평일 7번 · 국내 장중은 약 20분 지연 · 美 종가는 아침 07:00</span></div>
     <div id="indices"></div>
   </section>
 
   <section id="sec-macro" class="sec">
-    <div class="sec-h"><h2>환율 · 금리 · 원자재</h2><span class="asof" id="asof-macro"></span></div>
+    <div class="sec-h"><h2>환율 · 금리 · 원자재</h2><span class="asof" id="asof-macro"></span><span class="cad" title="자동 업데이트 주기">⟳ 평일 7번</span></div>
     <div class="grid3" id="macro"></div>
   </section>
 
   <section id="sec-cal" class="sec">
-    <div class="sec-h"><h2>주요 일정</h2><span class="asof" id="asof-cal"></span></div>
+    <div class="sec-h"><h2>주요 일정</h2><span class="asof" id="asof-cal"></span><span class="cad" title="자동 업데이트 주기">⟳ 평일 7번 · 향후 2주 일정</span></div>
     <div class="controls"><div class="seg" id="calWeek"></div><span class="muted sm-txt">시간은 한국시간(KST) · ● 핵심 지표</span></div>
     <div class="cal-grid">
       <div class="card"><div class="card-h"><h3>경제지표 · 이벤트</h3></div><div id="calEvents"></div></div>
@@ -79,7 +79,7 @@
   </section>
 
   <section id="sec-sector" class="sec">
-    <div class="sec-h"><h2>섹터 강세</h2><span class="asof" id="asof-sector"></span></div>
+    <div class="sec-h"><h2>섹터 강세</h2><span class="asof" id="asof-sector"></span><span class="cad" title="자동 업데이트 주기">⟳ 평일 7번 · 국내 업종은 장 마감 후(16:10) 확정</span></div>
     <div class="controls">
       <div class="seg" id="secUni"></div>
       <div class="seg" id="secPer"></div>
@@ -89,7 +89,7 @@
   </section>
 
   <section id="sec-stocks" class="sec">
-    <div class="sec-h"><h2>섹터별 종목</h2><span class="asof" id="asof-stocks"></span></div>
+    <div class="sec-h"><h2>섹터별 종목</h2><span class="asof" id="asof-stocks"></span><span class="cad" title="자동 업데이트 주기">⟳ 평일 7번 · PER 등 재무지표는 하루 1번</span></div>
     <div class="controls">
       <div class="seg" id="stUni"></div>
       <div class="seg" id="stPer"></div>
@@ -99,7 +99,7 @@
   </section>
 
   <section id="sec-vc" class="sec">
-    <div class="sec-h"><h2>섹터 밸류체인</h2><span class="asof" id="asof-vc"></span></div>
+    <div class="sec-h"><h2>섹터 밸류체인</h2><span class="asof" id="asof-vc"></span><span class="cad" title="자동 업데이트 주기">⟳ 평일 7번 · 장중은 약 20분 지연</span></div>
     <div class="controls">
       <div class="seg" id="vcSec"></div>
       <div class="seg" id="vcPer"></div>
@@ -110,7 +110,7 @@
   </section>
 
   <section id="sec-scan" class="sec">
-    <div class="sec-h"><h2>차트 포착기</h2><span class="asof" id="asof-scan"></span></div>
+    <div class="sec-h"><h2>차트 포착기</h2><span class="asof" id="asof-scan"></span><span class="cad" title="자동 업데이트 주기">⟳ 평일 7번 · 장중 실행분은 그 시점 가격 기준</span></div>
     <div class="controls">
       <div class="ctrl-row">
         <div class="seg" id="scMkt"></div>
@@ -132,7 +132,7 @@
   </section>
 
   <section id="sec-flow" class="sec">
-    <div class="sec-h"><h2>국내 수급</h2><span class="asof" id="asof-flow"></span></div>
+    <div class="sec-h"><h2>국내 수급</h2><span class="asof" id="asof-flow"></span><span class="cad" title="자동 업데이트 주기">⟳ 평일 7번 · 수급 16:10 잠정 → 18:00 확정 · 공매도 잔고는 2거래일 지연</span></div>
     <div class="flow-grid">
       <div class="card">
         <div class="card-h">
@@ -170,7 +170,7 @@
   </section>
 
   <section id="sec-news" class="sec">
-    <div class="sec-h"><h2>뉴스플로우</h2><span class="asof" id="asof-news"></span></div>
+    <div class="sec-h"><h2>뉴스플로우</h2><span class="asof" id="asof-news"></span><span class="cad" title="자동 업데이트 주기">⟳ 평일 7번</span></div>
     <div class="news-ctrl">
       <div class="seg" id="newsRegion"></div>
       <input type="search" id="newsQ" placeholder="키워드 검색 (예: 삼성전자, 금리)">
@@ -183,6 +183,18 @@
 
 <footer class="wrap foot">
   <p class="contact">한화투자증권 WM지원팀 · 문의사항은 <b>WM지원팀 김용진 대리</b>에게 연락 부탁드립니다.</p>
+  <div class="disc sched">
+    <b>자동 업데이트 시간표</b> <span class="muted">(한국시간 · GitHub 사정으로 5~20분 늦어질 수 있음)</span>
+    <table>
+      <tr><th>07:00</th><td>월~토</td><td>미국장 마감 반영 (지수·해외 종목·환율·금리·일정·뉴스)</td></tr>
+      <tr><th>09:30 · 11:30 · 13:30</th><td>월~금</td><td>국내 장중 (국내는 약 20분 지연 시세)</td></tr>
+      <tr><th>16:10</th><td>월~금</td><td>국내 장 마감 (업종·종목 종가, 수급 잠정)</td></tr>
+      <tr><th>18:00</th><td>월~금</td><td>국내 수급·공매도 확정치</td></tr>
+      <tr><th>23:00</th><td>월~금</td><td>미국장 개장 후 (미국 장중)</td></tr>
+      <tr><th>30분마다</th><td>매일</td><td>WM지원팀 추천 영상·자료 (텔레그램 게시분)</td></tr>
+    </table>
+    <span class="muted">모든 시간대에 전 섹션을 함께 갱신하며, 섹션 제목 옆 '갱신' 시각이 실제 반영 시각입니다. 공휴일에도 정해진 시간에 돌지만 새 시세가 없으면 직전 값이 그대로 나옵니다.</span>
+  </div>
   <div class="disc">
     <b>유의사항</b>
     <ol>
@@ -198,7 +210,7 @@
 <div class="tip" id="tip"></div>
 <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modalBox" role="dialog"></div></div>
 <script src="assets/app.js?v=7"></script>
-<script src="assets/scan.js?v=4"></script>
+<script src="assets/scan.js?v=5"></script>
 <script src="assets/guide.js?v=3"></script>
 </body>
 </html>
