@@ -525,6 +525,11 @@ def _valuechain():
     return collect_valuechain(CTX)
 
 
+def _themes():
+    from scan import collect_themes
+    return collect_themes(CTX)
+
+
 def _links():
     from links import collect_links
     return collect_links(CTX)
@@ -539,6 +544,7 @@ SECTIONS = {
     "stocks_kr": _stocks_kr,
     "stocks_global": _stocks_global,
     "valuechain": _valuechain,
+    "themes": _themes,
     "scan": _scan,
     "scan_ath": _scan_ath,
     "news": collect_news,

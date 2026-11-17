@@ -217,3 +217,64 @@ def collect_valuechain(ctx: dict) -> dict:
                     s.update({k: stt[k] for k in ("last", "pct", "r1w", "r1m", "r3m", "ytd", "from_hi", "spark", "date")})
             st["stocks"] = [s for s in st["stocks"] if "last" in s]
     return vc
+
+
+# ──────────────────────────────────────────────────────────────────────
+# 신기술 테마: 설명은 themes.json(수작업), 주가·테마 지수는 자동
+# ──────────────────────────────────────────────────────────────────────
+THEME_BENCH = {"kospi": "^KS11", "nasdaq": "^IXIC"}
+THEME_SUFFIX_CCY = {".T": "JPY", ".TW": "TWD", ".TWO": "TWD", ".SZ": "CNY", ".SS": "CNY"}
+
+
+def _ew_index(closes: dict[str, pd.Series], syms: list[str], dates: pd.DatetimeIndex) -> pd.Series | None:
+    """동일가중 지수(일별 수익률 평균, 시작=100). 휴장일은 직전 종가로 채움."""
+    cols = {s: closes[s] for s in syms if s in closes and len(closes[s]) >= 60}
+    if not cols:
+        return None
+    px = pd.DataFrame(cols).reindex(dates).ffill()
+    ret = px.pct_change().clip(-0.5, 0.5).mean(axis=1, skipna=True).fillna(0)
+    return (1 + ret).cumprod() * 100
+
+
+def collect_themes(ctx: dict) -> dict:
+    th = json.loads((Path(__file__).parent / "themes.json").read_text(encoding="utf-8"))
+    listing = kr_listing()
+    ysym = {}
+    for t in th["themes"]:
+        for s in t["stocks"]:
+            if s["country"] == "KR":
+                info = listing.get(s["ticker"])
+                if info:
+                    ysym[s["ticker"]] = f"{s['ticker']}.{'KS' if info['market'] == 'KOSPI' else 'KQ'}"
+                    s["cap"] = round(info["cap"])
+                s["ccy"] = "KRW"
+            else:
+                ysym[s["ticker"]] = s["ticker"]
+                s["ccy"] = next((c for suf, c in THEME_SUFFIX_CCY.items() if s["ticker"].endswith(suf)), "USD")
+    closes = download(sorted(set(ysym.values()) | set(THEME_BENCH.values())), "2y")
+    log(f"테마 가격 {len(closes)}/{len(set(ysym.values())) + len(THEME_BENCH)}")
+    for t in th["themes"]:
+        for s in t["stocks"]:
+            stt = series_stats(closes.get(ysym.get(s["ticker"], ""), pd.Series(dtype=float)), spark_n=120)
+            if stt:
+                s.update({k: stt[k] for k in ("last", "pct", "r1w", "r1m", "r3m", "ytd", "from_hi", "spark", "date")})
+        # 대체 관계(alt)는 지수에서 뺀다
+        mem = [s for s in t["stocks"] if s.get("rel") != "alt" and s["ticker"] in ysym]
+        all_dates = sorted(set().union(*[closes[ysym[s["ticker"]]].index for s in mem if ysym[s["ticker"]] in closes]))
+        dates = pd.DatetimeIndex(all_dates)[-253:]
+        lines = {
+            "theme": _ew_index(closes, [ysym[s["ticker"]] for s in mem], dates),
+            "kr": _ew_index(closes, [ysym[s["ticker"]] for s in mem if s["country"] == "KR"], dates),
+            "gl": _ew_index(closes, [ysym[s["ticker"]] for s in mem if s["country"] != "KR"], dates),
+            **{k: _ew_index(closes, [v], dates) for k, v in THEME_BENCH.items()},
+        }
+        t["index"] = {
+            "dates": [d.strftime("%Y-%m-%d") for d in dates],
+            **{k: [r2(v) for v in s.tolist()] for k, s in lines.items() if s is not None},
+            "members": len(mem),
+        }
+        st = series_stats(lines["theme"], spark_n=120) if lines["theme"] is not None else None
+        if st:
+            t["stat"] = {k: st[k] for k in ("pct", "r1w", "r1m", "r3m", "ytd", "spark")}
+        t["stocks"] = [s for s in t["stocks"] if "last" in s]
+    return th

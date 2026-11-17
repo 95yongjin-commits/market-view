@@ -192,7 +192,8 @@
   const ST = { uni: "kr", per: "1D" };
   const ST_KEY = { "1D": "pct", "1W": "r1w", "1M": "r1m", "3M": "r3m", YTD: "ytd" };
   const stData = () => (ST.uni === "kr" ? D.stocks_kr : D.stocks_global);
-  const fmtPx = (v, ccy) => (!isN(v) ? "–" : ccy === "KRW" ? Math.round(v).toLocaleString("en-US") : "$" + num(v, v >= 1000 ? 0 : 2));
+  const PX_PRE = { USD: "$", JPY: "¥", TWD: "NT$", CNY: "CN¥" };
+  const fmtPx = (v, ccy) => (!isN(v) ? "–" : ccy === "KRW" ? Math.round(v).toLocaleString("en-US") : (PX_PRE[ccy] || "$") + num(v, v >= 1000 ? 0 : 2));
 
   function renderStocks() {
     const d = stData();
