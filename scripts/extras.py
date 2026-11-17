@@ -152,7 +152,7 @@ def collect_calendar(ctx: dict) -> dict:
     log(f"일정: 지표 {len(events)}건, 실적 {len(earnings)}건")
     notes = []
     try:
-        man = json.loads((Path(__file__).parent / "events_manual.json").read_text(encoding="utf-8"))
+        man = json.loads((Path(__file__).resolve().parent.parent / "store" / "events.json").read_text(encoding="utf-8"))
         notes = sorted((x for x in man["items"] if x["date"] >= days[0].isoformat()), key=lambda x: x["date"])
     except Exception as e:
         log("수동 일정 읽기 실패", e)
