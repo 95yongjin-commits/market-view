@@ -407,10 +407,28 @@
   /* ── 주요 일정 ─────────────────────────────────────── */
   const CAL = { week: 0 };
   const md = (iso) => { const d = new Date(iso + "T00:00:00"); return `${d.getMonth() + 1}/${d.getDate()} (${WD[d.getDay()]})`; };
+  /* WM지원팀이 정리한 이슈 일정(scripts/events_manual.json): 오늘 이후만, 날짜별 묶음 */
+  const NOTE_CAT = { ipo: "상장·공모", policy: "정책·정치", ind: "산업·행사", macro: "해외 지표", earn: "해외 실적" };
+  let notesAll = false;
+  function renderNotes(c) {
+    const box = $("#calNotes");
+    const list = (c.notes || []).filter((x) => x.date >= c.today);
+    if (!list.length) { box.closest(".cal-notes").style.display = "none"; return; }
+    box.closest(".cal-notes").style.display = "";
+    const dates = [...new Set(list.map((x) => x.date))];
+    const show = notesAll ? dates : dates.slice(0, 6);
+    box.innerHTML = `<div class="nt-grid">${show.map((d) => `<div class="nt-day"><div class="cal-day ${d === c.today ? "" : ""}">${md(d)}${d === c.today ? '<span class="today">오늘</span>' : ""}</div>
+      ${list.filter((x) => x.date === d).map((x) => `<div class="nt"><span class="nt-c c-${esc(x.cat)}">${NOTE_CAT[x.cat] || ""}</span><span>${esc(x.text)}</span></div>`).join("")}</div>`).join("")}</div>
+      ${dates.length > 6 ? `<button type="button" class="nt-more" id="ntMore">${notesAll ? "접기" : `이후 일정 ${dates.length - 6}일 더 보기`}</button>` : ""}`;
+    const b = $("#ntMore");
+    if (b) b.onclick = () => { notesAll = !notesAll; renderNotes(c); };
+  }
+
   function renderCal() {
     const c = D.calendar;
     if (!c) { $("#calEvents").innerHTML = $("#calEarn").innerHTML = `<p class="empty-s">일정을 불러오지 못했습니다.</p>`; return; }
     $("#asof-cal").innerHTML = `갱신 ${c.updated} · 출처 Nasdaq 캘린더` + staleBadge("calendar");
+    renderNotes(c);
     const days = c.days.slice(CAL.week * 5, CAL.week * 5 + 5);
     const dayHead = (d) => `<div class="cal-day ${d < c.today ? "past" : ""}">${md(d)}${d === c.today ? '<span class="today">오늘</span>' : ""}</div>`;
     $("#calEvents").innerHTML = days.map((d) => {

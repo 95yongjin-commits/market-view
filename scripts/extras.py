@@ -5,7 +5,9 @@ collect.py 에서 섹션 'calendar', 'short' 로 호출된다.
 """
 from __future__ import annotations
 
+import json
 import re
+from pathlib import Path
 from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -148,8 +150,14 @@ def collect_calendar(ctx: dict) -> dict:
     events.sort(key=lambda x: (x["date"], x["kst"] or "99"))
     earnings.sort(key=lambda x: (x["date"], -x["cap_b"]))
     log(f"일정: 지표 {len(events)}건, 실적 {len(earnings)}건")
+    notes = []
+    try:
+        man = json.loads((Path(__file__).parent / "events_manual.json").read_text(encoding="utf-8"))
+        notes = sorted((x for x in man["items"] if x["date"] >= days[0].isoformat()), key=lambda x: x["date"])
+    except Exception as e:
+        log("수동 일정 읽기 실패", e)
     return {"days": [d.isoformat() for d in days], "today": now_kst().date().isoformat(),
-            "events": events, "earnings": earnings}
+            "events": events, "earnings": earnings, "notes": notes}
 
 
 # ──────────────────────────────────────────────────────────────────────

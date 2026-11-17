@@ -545,3 +545,15 @@ b.lv-warm, .gd.lv-warm .gd-h b { color: #f5a524; }
   .th-rank .rk { grid-template-columns: 96px 1fr 58px; }
   .th-st .why { display: none; }
 }
+
+/* ── 이슈 일정(수동) ─────────────────────────────── */
+.cal-notes { margin-bottom: 12px; }
+.nt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 4px 20px; }
+.nt-day .cal-day { padding-top: 10px; }
+.nt { display: flex; gap: 8px; align-items: baseline; font-size: 13px; padding: 5px 0; border-bottom: 1px dashed var(--line); color: var(--ink-2); }
+.nt:last-child { border-bottom: 0; }
+.nt-c { flex: none; font-size: 10.5px; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: var(--bg-2); color: var(--muted); white-space: nowrap; }
+.nt-c.c-ipo { background: var(--accent-soft); color: var(--accent); }
+.nt-c.c-policy { background: var(--up-soft); color: var(--up); }
+.nt-c.c-macro, .nt-c.c-earn { background: var(--down-soft); color: var(--down); }
+.nt-more { margin-top: 10px; font-size: 12.5px; color: var(--accent); font-weight: 700; padding: 0; }
