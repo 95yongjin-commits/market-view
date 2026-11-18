@@ -14,7 +14,7 @@
   })();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<link rel="stylesheet" href="assets/style.css?v=15">
+<link rel="stylesheet" href="assets/style.css?v=16">
 </head>
 <body>
 <aside class="side" id="side" aria-label="섹션 메뉴">
@@ -39,6 +39,7 @@
     </button>
   </div>
   <nav class="wrap nav" id="nav">
+    <a href="#sec-brief">모닝 브리핑</a>
     <a href="#sec-guide">오늘의 체크</a>
     <a href="#sec-index">지수</a>
     <a href="#sec-macro">환율·금리</a>
@@ -56,29 +57,34 @@
 <div class="tape-wrap"><div class="wrap tape" id="tape"></div></div>
 
 <main class="wrap">
+  <section id="sec-brief" class="sec brief-sec">
+    <div class="sec-h"><h2>모닝 브리핑</h2><span class="sub-l">전체 한줄 요약</span><span class="asof" id="asof-brief"></span><span class="cad" id="cad-brief" title="자동 업데이트 주기"></span></div>
+    <div class="card brief" id="briefBox"><div class="err">모닝 브리핑 불러오는 중…</div></div>
+  </section>
+
   <section id="sec-guide" class="sec">
-    <div class="sec-h"><h2>오늘의 시장 체크</h2><span class="asof">지표로 자동 판정 · 각 카드의 '볼 곳'에서 바로 확인</span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 07:00 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00</span></div>
+    <div class="sec-h"><h2>오늘의 시장 체크</h2><span class="asof">지표로 자동 판정</span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 06:30 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00</span></div>
     <div class="gd-sum" id="gdSummary"></div>
     <div class="gd-grid" id="gdRegime"><div class="err">불러오는 중…</div></div>
     <div class="sec-h" style="margin-top:22px"><h3 class="h3">WM지원팀 추천 영상·자료</h3><span class="cad" title="자동 업데이트 주기">⟳ 매일 30분마다</span></div>
     <div class="controls"><div class="seg" id="lkTags" style="display:none"></div></div>
     <div class="lk-grid" id="lkGrid"></div>
     <button class="more" id="lkMore" type="button">더 보기</button>
-    <p class="hint">국면 판정은 정해진 숫자 기준에 따른 참고용이며 투자 권유가 아닙니다. 추천 영상·자료는 외부 제작물로 당사 의견과 다를 수 있습니다.</p>
+    <p class="hint">추천 영상·자료는 외부 제작물로 당사 의견과 다를 수 있습니다.</p>
   </section>
 
   <section id="sec-index" class="sec">
-    <div class="sec-h"><h2>주요 지수</h2><span class="asof" id="asof-index"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 07:00 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00 · 美 종가는 07:00 · 국내 장중 약 20분 지연</span></div>
+    <div class="sec-h"><h2>주요 지수</h2><span class="asof" id="asof-index"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 06:30 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00 · 美 종가는 06:30 · 국내 장중 약 20분 지연</span></div>
     <div id="indices"></div>
   </section>
 
   <section id="sec-macro" class="sec">
-    <div class="sec-h"><h2>환율 · 금리 · 원자재</h2><span class="asof" id="asof-macro"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 07:00 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00</span></div>
+    <div class="sec-h"><h2>환율 · 금리 · 원자재</h2><span class="asof" id="asof-macro"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 06:30 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00</span></div>
     <div class="grid3" id="macro"></div>
   </section>
 
   <section id="sec-cal" class="sec">
-    <div class="sec-h"><h2>주요 일정</h2><span class="asof" id="asof-cal"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 07:00 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00 · 향후 2주 일정</span></div>
+    <div class="sec-h"><h2>주요 일정</h2><span class="asof" id="asof-cal"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 06:30 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00 · 향후 2주 일정</span></div>
     <div class="controls"><div class="seg" id="calWeek"></div><span class="muted sm-txt">시간은 한국시간(KST) · ● 핵심 지표</span></div>
     <div class="card cal-notes"><div class="card-h"><h3>국내외 이슈 일정</h3><span class="muted sm-txt">WM지원팀 정리</span></div><div id="calNotes"></div></div>
     <div class="cal-grid">
@@ -88,7 +94,7 @@
   </section>
 
   <section id="sec-sector" class="sec">
-    <div class="sec-h"><h2>섹터 강세</h2><span class="asof" id="asof-sector"></span><span class="cad" title="자동 업데이트 주기">⟳ 국내 16:10(장 마감 후) · 미국·테마 07:00(종가)·23:00(장중)</span></div>
+    <div class="sec-h"><h2>섹터 강세</h2><span class="asof" id="asof-sector"></span><span class="cad" title="자동 업데이트 주기">⟳ 국내 16:10(장 마감 후) · 미국·테마 06:30(종가)·23:00(장중)</span></div>
     <div class="controls">
       <div class="seg" id="secUni"></div>
       <div class="seg" id="secPer"></div>
@@ -98,7 +104,7 @@
   </section>
 
   <section id="sec-stocks" class="sec">
-    <div class="sec-h"><h2>섹터별 종목</h2><span class="asof" id="asof-stocks"></span><span class="cad" title="자동 업데이트 주기">⟳ 국내 16:10(장 마감 후) · 해외 07:00(종가)·23:00(장중) · PER 등은 하루 1번</span></div>
+    <div class="sec-h"><h2>섹터별 종목</h2><span class="asof" id="asof-stocks"></span><span class="cad" title="자동 업데이트 주기">⟳ 국내 16:10(장 마감 후) · 해외 06:30(종가)·23:00(장중) · PER 등은 하루 1번</span></div>
     <div class="controls">
       <div class="seg" id="stUni"></div>
       <div class="seg" id="stPer"></div>
@@ -108,7 +114,7 @@
   </section>
 
   <section id="sec-vc" class="sec">
-    <div class="sec-h"><h2>섹터 밸류체인</h2><span class="asof" id="asof-vc"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 07:00 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00 · 국내 장중 약 20분 지연</span></div>
+    <div class="sec-h"><h2>섹터 밸류체인</h2><span class="asof" id="asof-vc"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 06:30 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00 · 국내 장중 약 20분 지연</span></div>
     <div class="controls">
       <div class="seg" id="vcSec"></div>
       <div class="seg" id="vcPer"></div>
@@ -119,13 +125,13 @@
   </section>
 
   <section id="sec-theme" class="sec">
-    <div class="sec-h"><h2>신기술 테마</h2><span class="asof" id="asof-th"></span><span class="cad" title="자동 업데이트 주기">⟳ 주가·테마 지수: 월~금 하루 7번(07:00 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00) · 설명은 자료 검토 후 수시</span></div>
+    <div class="sec-h"><h2>신기술 테마</h2><span class="asof" id="asof-th"></span><span class="cad" title="자동 업데이트 주기">⟳ 주가·테마 지수: 월~금 하루 7번(06:30 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00) · 설명은 자료 검토 후 수시</span></div>
     <div class="th-cards" id="thCards"><div class="err">테마 불러오는 중…</div></div>
     <p class="hint">새로 떠오르는 기술이 무엇인지, 국내외 관련 기업과 주가 흐름을 정리했습니다. 카드를 누르면 자세한 내용이 열립니다.</p>
   </section>
 
   <section id="sec-scan" class="sec">
-    <div class="sec-h"><h2>차트 포착기</h2><span class="asof" id="asof-scan"></span><span class="cad" title="자동 업데이트 주기">⟳ 국내 09:30·11:30·13:30(장중)·16:10(종가) · 미국 07:00(종가)·23:00(장중)</span></div>
+    <div class="sec-h"><h2>차트 포착기</h2><span class="asof" id="asof-scan"></span><span class="cad" title="자동 업데이트 주기">⟳ 국내 09:30·11:30·13:30(장중)·16:10(종가) · 미국 06:30(종가)·23:00(장중)</span></div>
     <div class="controls">
       <div class="ctrl-row">
         <div class="seg" id="scMkt"></div>
@@ -143,7 +149,7 @@
     </div>
     <div class="card sc-table" id="scTable"><div class="err">가격 데이터 불러오는 중…</div></div>
     <button class="more" id="scMore" type="button">더 보기</button>
-    <p class="hint">조건을 여러 개 고르면 모두 만족하는 종목만 나옵니다. 조건 충족은 기술적 상태를 보여줄 뿐 매수·매도 추천이 아닙니다. 장중에는 실행 시점 가격 기준입니다.</p>
+    <p class="hint">조건을 여러 개 고르면 모두 만족하는 종목만 나옵니다. 조건 충족은 기술적 상태를 보여줄 뿐 매수·매도 추천이 아닙니다.</p>
   </section>
 
   <section id="sec-flow" class="sec">
@@ -185,7 +191,7 @@
   </section>
 
   <section id="sec-news" class="sec">
-    <div class="sec-h"><h2>뉴스플로우</h2><span class="asof" id="asof-news"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 07:00 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00</span></div>
+    <div class="sec-h"><h2>뉴스플로우</h2><span class="asof" id="asof-news"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 06:30 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00</span></div>
     <div class="news-ctrl">
       <div class="seg" id="newsRegion"></div>
       <input type="search" id="newsQ" placeholder="키워드 검색 (예: 삼성전자, 금리)">
@@ -201,7 +207,7 @@
   <div class="disc sched">
     <b>자동 업데이트 시간표</b> <span class="muted">(한국시간 · GitHub 사정으로 5~20분 늦어질 수 있음)</span>
     <table>
-      <tr><th>07:00</th><td>월~토</td><td>미국장 마감 반영 (지수·해외 종목·환율·금리·일정·뉴스)</td></tr>
+      <tr><th>06:30</th><td>월~토</td><td>미국장 마감 반영 (지수·해외 종목·환율·금리·일정·뉴스) + 모닝 브리핑 작성(하루 동안 고정)</td></tr>
       <tr><th>09:30 · 11:30 · 13:30</th><td>월~금</td><td>국내 장중 (국내는 약 20분 지연 시세)</td></tr>
       <tr><th>16:10</th><td>월~금</td><td>국내 장 마감 (업종·종목 종가, 수급 잠정)</td></tr>
       <tr><th>18:00</th><td>월~금</td><td>국내 수급·공매도 확정치</td></tr>
@@ -224,9 +230,10 @@
 
 <div class="tip" id="tip"></div>
 <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modalBox" role="dialog"></div></div>
-<script src="assets/app.js?v=10"></script>
+<script src="assets/app.js?v=11"></script>
 <script src="assets/scan.js?v=5"></script>
 <script src="assets/guide.js?v=3"></script>
 <script src="assets/theme.js?v=1"></script>
+<script src="assets/brief.js?v=1"></script>
 </body>
 </html>

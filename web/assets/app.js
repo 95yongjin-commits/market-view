@@ -486,7 +486,7 @@
   /* 넓은 화면: 왼쪽 고정 사이드바 (위쪽 메뉴와 같은 링크를 묶음별로) */
   function initSide() {
     const lbl = Object.fromEntries([...document.querySelectorAll("#nav a")].map((a) => [a.getAttribute("href"), a.textContent]));
-    const G = [["시장 개요", ["#sec-guide", "#sec-index", "#sec-macro", "#sec-cal"]],
+    const G = [["시장 개요", ["#sec-brief", "#sec-guide", "#sec-index", "#sec-macro", "#sec-cal"]],
       ["섹터·종목", ["#sec-sector", "#sec-stocks", "#sec-vc", "#sec-theme"]],
       ["시그널", ["#sec-scan", "#sec-flow"]], ["뉴스", ["#sec-news"]]];
     const used = new Set(G.flatMap((g) => g[1]));

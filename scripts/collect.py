@@ -535,6 +535,39 @@ def _links():
     return collect_links(CTX)
 
 
+def collect_brief() -> dict:
+    """모닝 브리핑: 아침(06~09시) 실행 때만 새로 만들고, 그 외 실행에서는 직전 것을 그대로 둔다.
+    → 장중 수치가 바뀌어도 하루 종일 '아침 기준' 내용이 유지된다. BRIEF_FORCE=1 이면 강제로 새로 만든다."""
+    now = now_kst()
+    prev = CTX["load_prev"]("brief")
+    morning = 6 <= now.hour < 9 and now.weekday() < 6
+    if prev and prev.get("created") and not morning and not os.environ.get("BRIEF_FORCE"):
+        return prev
+    out = CTX["out"]
+
+    def rd(n):
+        return json.loads((out / f"{n}.json").read_text(encoding="utf-8"))
+    g, r, k, c, th = rd("global"), rd("rates"), rd("korea"), rd("calendar"), rd("themes")
+    strip = lambda x: {kk: vv for kk, vv in x.items() if kk != "spark"}
+    fl = k.get("flow", {}).get("KOSPI", [])
+    tops = k.get("tops", {})
+    return {
+        "created": now.strftime("%Y-%m-%d %H:%M"),
+        "global": {"indices": {m: [strip(x) for x in g["indices"][m]] for m in ("us", "kr")},
+                   "us_sectors": [{"name": x["name"], "pct": x.get("pct")} for x in g.get("us_sectors", [])]},
+        "rates": {"bonds": [strip(x) for x in r.get("bonds", [])], "fx": [strip(x) for x in r.get("fx", [])]},
+        "korea": {"date": k.get("date"), "breadth": k.get("breadth"),
+                  "sectors": {"KOSPI": [{"sector": x["sector"], "count": x.get("count"), "r1d": x.get("r1d")}
+                                        for x in k.get("sectors", {}).get("KOSPI", [])]},
+                  "flow": {"KOSPI": fl[-5:]},
+                  "tops": {t: tops.get(t, [])[:1] for t in ("foreign_buy_5d", "foreign_sell_5d")}},
+        "calendar": {"today": now.date().isoformat(), "events": c.get("events", []),
+                     "earnings": c.get("earnings", []), "notes": c.get("notes", [])},
+        "themes": {"themes": [{"name": t["name"], "stat": {kk: t.get("stat", {}).get(kk) for kk in ("r1w", "r1m")}}
+                              for t in th.get("themes", []) if t.get("stat")]},
+    }
+
+
 SECTIONS = {
     "global": collect_global,
     "rates": collect_rates_fx,
@@ -549,6 +582,7 @@ SECTIONS = {
     "scan_ath": _scan_ath,
     "news": collect_news,
     "links": _links,
+    "brief": collect_brief,   # 반드시 마지막: 위 섹션 결과를 읽어 만든다
 }
 
 
@@ -586,6 +620,7 @@ def main():
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     CTX["load_prev"] = lambda name: load_prev(a.prev, out, name)
+    CTX["out"] = out
     meta = load_prev(a.prev, out, "meta") or {}
     meta.setdefault("sections", {})
     failed = []
