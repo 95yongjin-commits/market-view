@@ -1,0 +1,54 @@
+# Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11
+# 주요 공시(DART)만 장중 30분마다 갱신. 다른 섹션은 직전 배포본을 그대로 쓴다.
+# 정규 갱신(:00·:10·:30)과 겹치지 않게 매시 15분·45분에 돈다.
+name: 주요 공시 갱신
+
+on:
+  schedule:
+    - cron: "15,45 23 * * 0-4"    # 08:15 · 08:45 KST (월~금)
+    - cron: "15,45 0-9 * * 1-5"   # 09:15 ~ 18:45 KST (월~금)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: disclosures
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Seoul
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: 공시만 갱신 (나머지는 직전 배포본 유지)
+        env:
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
+        run: python scripts/collect.py --out web/data --only disclosures --prev "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+  deploy:
+    needs: build
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

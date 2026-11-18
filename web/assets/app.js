@@ -488,7 +488,7 @@
     const lbl = Object.fromEntries([...document.querySelectorAll("#nav a")].map((a) => [a.getAttribute("href"), a.textContent]));
     const G = [["시장 개요", ["#sec-brief", "#sec-guide", "#sec-index", "#sec-macro", "#sec-cal"]],
       ["섹터·종목", ["#sec-sector", "#sec-stocks", "#sec-vc", "#sec-theme"]],
-      ["시그널", ["#sec-scan", "#sec-flow"]], ["뉴스", ["#sec-news"]]];
+      ["시그널", ["#sec-scan", "#sec-flow"]], ["공시·뉴스", ["#sec-ds", "#sec-news"]]];
     const used = new Set(G.flatMap((g) => g[1]));
     const rest = Object.keys(lbl).filter((h) => !used.has(h));
     if (rest.length) G.push(["기타", rest]);

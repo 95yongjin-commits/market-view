@@ -14,7 +14,7 @@
   })();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<link rel="stylesheet" href="assets/style.css?v=16">
+<link rel="stylesheet" href="assets/style.css?v=17">
 </head>
 <body>
 <aside class="side" id="side" aria-label="섹션 메뉴">
@@ -50,6 +50,7 @@
     <a href="#sec-theme">신기술 테마</a>
     <a href="#sec-scan">차트 포착기</a>
     <a href="#sec-flow">수급</a>
+    <a href="#sec-ds">주요 공시</a>
     <a href="#sec-news">뉴스</a>
   </nav>
 </header>
@@ -190,6 +191,12 @@
     </div>
   </section>
 
+  <section id="sec-ds" class="sec">
+    <div class="sec-h"><h2>주요 공시</h2><span class="asof" id="asof-ds"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 08:15 ~ 18:45 30분마다 · 최근 3일</span></div>
+    <div class="controls"><div class="seg" id="dsCat"></div><span class="muted sm-txt">사이트 종목 + 시총 3,000억 이상 · 수주·실적·자본·주주환원·지배구조·투자·거래 공시 · 누르면 DART 원문</span></div>
+    <div class="card ds-box" id="dsList"><div class="err">공시 불러오는 중…</div></div>
+  </section>
+
   <section id="sec-news" class="sec">
     <div class="sec-h"><h2>뉴스플로우</h2><span class="asof" id="asof-news"></span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 06:30 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00</span></div>
     <div class="news-ctrl">
@@ -211,6 +218,7 @@
       <tr><th>09:30 · 11:30 · 13:30</th><td>월~금</td><td>국내 장중 (국내는 약 20분 지연 시세)</td></tr>
       <tr><th>16:10</th><td>월~금</td><td>국내 장 마감 (업종·종목 종가, 수급 잠정)</td></tr>
       <tr><th>18:00</th><td>월~금</td><td>국내 수급·공매도 확정치</td></tr>
+      <tr><th>08:15~18:45</th><td>월~금</td><td>주요 공시(DART) 30분마다</td></tr>
       <tr><th>23:00</th><td>월~금</td><td>미국장 개장 후 (미국 장중)</td></tr>
       <tr><th>30분마다</th><td>매일</td><td>WM지원팀 추천 영상·자료 (텔레그램 게시분)</td></tr>
     </table>
@@ -225,15 +233,16 @@
       <li>추천 영상·자료는 외부 제작물로 당사의 공식 의견과 다를 수 있습니다. 과거 성과는 미래 수익을 보장하지 않습니다.</li>
     </ol>
   </div>
-  <p>데이터 출처: KRX 정보데이터시스템(국내 업종·수급·공매도), Yahoo Finance(지수·주가·원자재), 네이버 증권(금리·환율·종목 목록, 환율은 하나은행 고시 기준), WISEfn WICS(국내 업종 분류), Nasdaq(경제·실적 일정, 미국 종목 목록), 각 언론사 RSS.</p>
+  <p>데이터 출처: KRX 정보데이터시스템(국내 업종·수급·공매도), Yahoo Finance(지수·주가·원자재), 네이버 증권(금리·환율·종목 목록, 환율은 하나은행 고시 기준), WISEfn WICS(국내 업종 분류), Nasdaq(경제·실적 일정, 미국 종목 목록), 금융감독원 DART(공시), 각 언론사 RSS.</p>
 </footer>
 
 <div class="tip" id="tip"></div>
 <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modalBox" role="dialog"></div></div>
-<script src="assets/app.js?v=11"></script>
+<script src="assets/app.js?v=12"></script>
 <script src="assets/scan.js?v=5"></script>
 <script src="assets/guide.js?v=3"></script>
 <script src="assets/theme.js?v=1"></script>
 <script src="assets/brief.js?v=1"></script>
+<script src="assets/disclosure.js?v=1"></script>
 </body>
 </html>

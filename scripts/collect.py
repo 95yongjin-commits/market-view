@@ -530,6 +530,11 @@ def _themes():
     return collect_themes(CTX)
 
 
+def _disclosures():
+    from disclosures import collect_disclosures
+    return collect_disclosures(CTX)
+
+
 def _links():
     from links import collect_links
     return collect_links(CTX)
@@ -582,6 +587,7 @@ SECTIONS = {
     "scan_ath": _scan_ath,
     "news": collect_news,
     "links": _links,
+    "disclosures": _disclosures,
     "brief": collect_brief,   # 반드시 마지막: 위 섹션 결과를 읽어 만든다
 }
 
