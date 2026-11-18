@@ -483,8 +483,27 @@
   }
 
   /* ── 네비게이션 하이라이트 ─────────────────────────── */
+  /* 넓은 화면: 왼쪽 고정 사이드바 (위쪽 메뉴와 같은 링크를 묶음별로) */
+  function initSide() {
+    const lbl = Object.fromEntries([...document.querySelectorAll("#nav a")].map((a) => [a.getAttribute("href"), a.textContent]));
+    const G = [["시장 개요", ["#sec-guide", "#sec-index", "#sec-macro", "#sec-cal"]],
+      ["섹터·종목", ["#sec-sector", "#sec-stocks", "#sec-vc", "#sec-theme"]],
+      ["시그널", ["#sec-scan", "#sec-flow"]], ["뉴스", ["#sec-news"]]];
+    const used = new Set(G.flatMap((g) => g[1]));
+    const rest = Object.keys(lbl).filter((h) => !used.has(h));
+    if (rest.length) G.push(["기타", rest]);
+    $("#sideNav").innerHTML = G.map(([g, hs]) => `<div class="side-g">${g}</div>` +
+      hs.filter((h) => lbl[h]).map((h) => `<a href="${h}">${esc(lbl[h])}</a>`).join("")).join("");
+    let on = true;
+    try { on = localStorage.getItem("mv-side") !== "off"; } catch (e) {}
+    const set = (v) => { on = v; document.body.classList.toggle("side-on", v); try { localStorage.setItem("mv-side", v ? "on" : "off"); } catch (e) {} };
+    set(on);
+    $("#sideX").onclick = () => set(false);
+    $("#sideOpen").onclick = () => set(true);
+  }
+
   function initNav() {
-    const links = [...document.querySelectorAll("#nav a")];
+    const links = [...document.querySelectorAll("#nav a, #sideNav a")];
     // 화면 위쪽 기준선(헤더 아래)을 지난 마지막 섹션을 현재 위치로 본다. 맨 위에서는 첫 섹션.
     const secs = [...document.querySelectorAll("section.sec")];
     let raf = 0;
@@ -506,7 +525,7 @@
   }
   const get = (n) => fetch(`data/${n}.json${NC}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 
-  initTheme(); initNav(); initFlowControls(); initNewsControls(); initStockControls(); initCalShort();
+  initTheme(); initSide(); initNav(); initFlowControls(); initNewsControls(); initStockControls(); initCalShort();
   seg($("#secUni"), UNIS, SEC.uni, (k) => { SEC.uni = k; renderSector(); });
   Promise.all(["meta", "global", "rates", "korea", "news", "calendar", "short"].map(get)).then(([meta, g, r, k, n, cal, sh]) => {
     Object.assign(D, { meta, global: g, rates: r, korea: k, news: n, calendar: cal, short: sh });

@@ -557,3 +557,27 @@ b.lv-warm, .gd.lv-warm .gd-h b { color: #f5a524; }
 .nt-c.c-policy { background: var(--up-soft); color: var(--up); }
 .nt-c.c-macro, .nt-c.c-earn { background: var(--down-soft); color: var(--down); }
 .nt-more { margin-top: 10px; font-size: 12.5px; color: var(--accent); font-weight: 700; padding: 0; }
+
+/* ── 왼쪽 고정 사이드바 (넓은 화면) ─────────────────── */
+.side, .side-open { display: none; }
+@media (min-width: 1200px) {
+  body.side-on { padding-left: 208px; }
+  body.side-on #nav { display: none; }
+  body.side-on .side { display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; width: 208px; z-index: 30;
+    background: var(--bg-2); border-right: 1px solid var(--line); padding: 16px 12px 14px; overflow-y: auto; }
+  body:not(.side-on) .side-open { display: block; position: fixed; left: 14px; bottom: 18px; z-index: 30; font-size: 12.5px; font-weight: 700;
+    color: var(--ink-2); background: var(--card); border: 1px solid var(--line-2); border-radius: 999px; padding: 7px 14px; box-shadow: var(--shadow); }
+  body:not(.side-on) .side-open:hover { color: var(--accent); border-color: var(--accent); }
+}
+.side-h { display: flex; align-items: center; gap: 8px; padding: 2px 4px 14px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.side-h b { font-size: 14.5px; font-weight: 800; letter-spacing: -.02em; flex: 1; }
+.side-mark { width: 7px; height: 20px; border-radius: 2px; background: linear-gradient(var(--accent), color-mix(in srgb, var(--accent) 40%, transparent)); }
+.side-x { font-size: 18px; line-height: 1; color: var(--muted); width: 26px; height: 26px; border-radius: 7px; border: 1px solid var(--line); }
+.side-x:hover { color: var(--ink); background: var(--hover); }
+.side-nav { display: flex; flex-direction: column; gap: 1px; flex: 1; }
+.side-g { font-size: 11px; font-weight: 700; color: var(--faint); letter-spacing: .04em; padding: 14px 10px 5px; }
+.side-nav a { display: block; padding: 8px 12px; border-radius: 8px; font-size: 13.5px; font-weight: 600; color: var(--muted); border-left: 3px solid transparent; }
+.side-nav a:hover { color: var(--ink); background: var(--hover); }
+.side-nav a.on { color: var(--ink); background: var(--accent-soft); border-left-color: var(--accent); }
+.side-top { font-size: 12px; color: var(--muted); padding: 10px 12px 0; border-top: 1px solid var(--line); margin-top: 10px; }
+.side-top:hover { color: var(--accent); }
