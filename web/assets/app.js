@@ -498,8 +498,15 @@
     try { on = localStorage.getItem("mv-side") !== "off"; } catch (e) {}
     const set = (v) => { on = v; document.body.classList.toggle("side-on", v); try { localStorage.setItem("mv-side", v ? "on" : "off"); } catch (e) {} };
     set(on);
-    $("#sideX").onclick = () => set(false);
+    // 좁은 화면(휴대폰·태블릿): 같은 메뉴를 왼쪽에서 밀려 나오는 서랍으로
+    const wide = () => matchMedia("(min-width: 1200px)").matches;
+    const drawer = (v) => document.body.classList.toggle("drawer-open", v);
+    $("#sideX").onclick = () => (wide() ? set(false) : drawer(false));
     $("#sideOpen").onclick = () => set(true);
+    $("#menuBtn").onclick = () => drawer(true);
+    $("#sideDim").onclick = () => drawer(false);
+    $("#side").addEventListener("click", (e) => { if (e.target.closest("a") && !wide()) drawer(false); });
+    addEventListener("keydown", (e) => { if (e.key === "Escape") drawer(false); });
   }
 
   function initNav() {

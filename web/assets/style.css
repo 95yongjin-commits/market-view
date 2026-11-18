@@ -622,3 +622,24 @@ b.lv-warm, .gd.lv-warm .gd-h b { color: #f5a524; }
   .ds-t { grid-column: 2; }
   .ds-go { display: none; }
 }
+
+/* ── 좁은 화면: 서랍 메뉴 ─────────────────────────── */
+.menu-btn { display: none; }
+@media (max-width: 1199.98px) {
+  #nav { display: none; }
+  .top-in { justify-content: flex-start; gap: 10px; }
+  .top-in .theme-btn { margin-left: auto; }
+  .menu-btn { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 38px; height: 38px; font-size: 19px;
+    color: var(--ink); border: 1px solid var(--line-2); border-radius: 10px; background: var(--card); }
+  .top-in .brand-mark { display: none; }
+  .top-in { padding-bottom: 12px; }
+  .side { display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; width: min(270px, 82vw); z-index: 70;
+    background: var(--bg-2); border-right: 1px solid var(--line); padding: 16px 12px 14px; overflow-y: auto;
+    transform: translateX(-102%); transition: transform .22s ease; box-shadow: 0 0 40px rgba(0,0,0,.35); }
+  body.drawer-open .side { transform: none; }
+  .side-dim { position: fixed; inset: 0; z-index: 65; background: rgba(0,0,0,.45); opacity: 0; pointer-events: none; transition: opacity .2s; }
+  body.drawer-open .side-dim { opacity: 1; pointer-events: auto; }
+  body.drawer-open { overflow: hidden; }
+  .side-nav a { padding: 10px 12px; font-size: 14.5px; }
+}
+html { scroll-padding-top: 90px; }
