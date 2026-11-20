@@ -1,7 +1,18 @@
 {
- "rev": 2,
- "offset": 353965558,
+ "rev": 3,
+ "offset": 353965559,
  "items": [
+  {
+   "kind": "youtube",
+   "vid": "KPtvvA42fMU",
+   "url": "https://www.youtube.com/watch?v=KPtvvA42fMU",
+   "thumb": "https://i.ytimg.com/vi/KPtvvA42fMU/mqdefault.jpg",
+   "site": "YouTube",
+   "title": "윤쎈X선진짱이 서로 물어봤습니다! \"반도체 사이클은 끝났을까?\" (선진짱) | 쩜.머니톡",
+   "source": "삼쩜삼캠퍼스",
+   "posted": "2026-11-20 10:43",
+   "id": "8-0"
+  },
   {
    "kind": "youtube",
    "vid": "9e-V_r0N-qI",
