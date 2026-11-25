@@ -261,6 +261,17 @@ def krx_login():
     set_auth_session(build_krx_session(kid, kpw))
 
 
+KRX_FINAL_HHMM = "16:00"   # 이 시각 전에는 당일 KRX 데이터가 미확정(장중 빈 값) → 직전 거래일 기준
+
+
+def krx_closed(tv: pd.DataFrame) -> pd.DataFrame:
+    """거래일 표에서 아직 확정 안 된 '오늘' 행을 뺀다 (장중 실행 시 빈 데이터로 덮어쓰는 문제 방지)."""
+    now = now_kst()
+    if now.strftime("%H:%M") < KRX_FINAL_HHMM:
+        tv = tv[pd.to_datetime(tv.index).date < now.date()]
+    return tv
+
+
 def col(df, *cands):
     for c in cands:
         if c in df.columns:
@@ -283,7 +294,7 @@ def collect_korea() -> dict:
     days: list[str] = []
     for mkt in ("KOSPI", "KOSDAQ"):
         tv = stock.get_market_trading_value_by_date(start, end, mkt)
-        tv = tv[(tv.abs().sum(axis=1) > 0)]
+        tv = krx_closed(tv[(tv.abs().sum(axis=1) > 0)])
         if tv.empty:
             continue
         if not days:

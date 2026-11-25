@@ -12,7 +12,7 @@ from datetime import timedelta
 import pandas as pd
 import requests
 
-from collect import UA, col, krx_login, log, now_kst, r2, series_stats, yf_closes
+from collect import UA, col, krx_closed, krx_login, log, now_kst, r2, series_stats, yf_closes
 
 SPARK_N = 120          # 카드·확대 차트용 종가 개수
 PER_SECTOR = 20        # 섹터당 최대 종목 수
@@ -76,7 +76,7 @@ def collect_stocks_kr(ctx: dict) -> dict:
     today = now_kst()
     tv = stock.get_market_trading_value_by_date((today - timedelta(days=14)).strftime("%Y%m%d"),
                                                 today.strftime("%Y%m%d"), "KOSPI")
-    tv = tv[(tv.abs().sum(axis=1) > 0)]
+    tv = krx_closed(tv[(tv.abs().sum(axis=1) > 0)])
     d0 = tv.index[-1].strftime("%Y%m%d")
 
     frames = []

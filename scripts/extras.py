@@ -14,7 +14,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import requests
 
-from collect import EOK, KST, col, krx_login, log, now_kst, r2
+from collect import EOK, KST, col, krx_closed, krx_login, log, now_kst, r2
 
 ET = ZoneInfo("America/New_York")
 NQ = {"User-Agent": "Mozilla/5.0", "Accept": "application/json"}
@@ -172,7 +172,7 @@ def collect_short(ctx: dict) -> dict:
     today = now_kst()
     tv = stock.get_market_trading_value_by_date((today - timedelta(days=30)).strftime("%Y%m%d"),
                                                 today.strftime("%Y%m%d"), "KOSPI")
-    tv = tv[(tv.abs().sum(axis=1) > 0)]
+    tv = krx_closed(tv[(tv.abs().sum(axis=1) > 0)])
     days = [d.strftime("%Y%m%d") for d in tv.index]
     d0 = days[-1]
     name_cache: dict[str, str] = {}
