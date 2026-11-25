@@ -90,10 +90,37 @@ def yf_closes(tickers: list[str]) -> dict[str, pd.Series]:
         try:
             s = df[t]["Close"] if isinstance(df.columns, pd.MultiIndex) else df["Close"]
             s.index = pd.to_datetime(s.index).tz_localize(None)
-            out[t] = s.dropna()
+            s = s.dropna().copy()
+            if t in YF_PATCH_LAST:
+                fix = yf_meta_close(t)
+                if fix and (s.empty or fix[0] > s.index[-1]):
+                    log(f"  {t}: 일봉 누락 → meta 종가 보완 {fix[0]:%Y-%m-%d} {fix[1]:,.2f}")
+                    s.loc[fix[0]] = fix[1]
+            out[t] = s
         except Exception:
             pass
     return out
+
+
+# 야후가 한국 지수의 당일 일봉을 null로 늦게 채우는 경우가 잦아 meta 값으로 보완
+YF_PATCH_LAST = {"^KS11", "^KQ11"}
+
+
+def yf_meta_close(t: str):
+    """차트 API meta의 regularMarketPrice를 (날짜, 종가)로 반환. 장중이면 None."""
+    try:
+        r = requests.get(f"https://query1.finance.yahoo.com/v8/finance/chart/{requests.utils.quote(t)}",
+                         params={"range": "5d", "interval": "1d"}, headers=UA, timeout=10)
+        m = r.json()["chart"]["result"][0]["meta"]
+        ts = int(m["regularMarketTime"])
+        end = int(m["currentTradingPeriod"]["regular"]["end"])
+        start = int(m["currentTradingPeriod"]["regular"]["start"])
+        if start <= ts < end:        # 정규장 진행 중 → 종가 아님
+            return None
+        d = datetime.fromtimestamp(ts, KST).date()
+        return pd.Timestamp(d), float(m["regularMarketPrice"])
+    except Exception:
+        return None
 
 
 # ──────────────────────────────────────────────────────────────────────
