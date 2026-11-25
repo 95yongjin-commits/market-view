@@ -6,7 +6,7 @@
     const { $, esc, isN, cls, pct, spark, seg, staleBadge, openModal, fmtPx } = window.MV;
     const NC = "?t=" + Date.now();
     const STAGES = ["태동", "기대", "확산", "검증"];
-    const REL = { direct: ["직접", "CPO 관련 제품·매출 있음"], indirect: ["간접", "업황 수혜, 직접 참여는 미확인"],
+    const REL = { direct: ["직접", "테마 관련 제품·매출 있음"], indirect: ["간접", "업황 수혜, 직접 참여는 미확인"],
       expect: ["기대", "사업 계획 단계"], alt: ["대체 관계", "테마 확산 시 수요 잠식 가능"] };
     const CC = { KR: "국내", US: "미국", JP: "일본", TW: "대만", CN: "중국" };
     const sg = (el, arr, c, fn) => seg(el, arr.map(([k, l]) => ({ k, l })), c, fn);
@@ -99,7 +99,7 @@
         <div class="th-scroll"><table class="th-st" id="thSt"></table></div>
         <p class="th-note">${Object.entries(REL).map(([k, [l, d]]) => `<span class="rel r-${k}">${l}</span> ${d}`).join(" &nbsp; ")}<br>종목을 누르면 차트가 열립니다. 해외는 현지 통화 기준입니다.</p>`;
       sg($("#thArea"), [["all", "전체"], ["kr", "국내"], ["gl", "해외"]], stF.area, (k) => { stF.area = k; rows(); });
-      sg($("#thRel"), [["all", "연관도 전체"], ["direct", "직접"], ["indirect", "간접"], ["alt", "대체 관계"]], stF.rel, (k) => { stF.rel = k; rows(); });
+      sg($("#thRel"), [["all", "연관도 전체"], ["direct", "직접"], ["indirect", "간접"], ["expect", "기대"], ["alt", "대체 관계"]], stF.rel, (k) => { stF.rel = k; rows(); });
       sg($("#thSort"), [["group", "단계순"], ["r1m", "1개월순"], ["ytd", "연초 이후순"]], stF.sort, (k) => { stF.sort = k; rows(); });
       rows();
     }
