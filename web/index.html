@@ -14,7 +14,7 @@
   })();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<link rel="stylesheet" href="assets/style.css?v=19">
+<link rel="stylesheet" href="assets/style.css?v=20">
 </head>
 <body>
 <aside class="side" id="side" aria-label="섹션 메뉴">
@@ -41,7 +41,6 @@
     </button>
   </div>
   <nav class="wrap nav" id="nav">
-    <a href="#sec-brief">모닝 브리핑</a>
     <a href="#sec-guide">오늘의 체크</a>
     <a href="#sec-index">지수</a>
     <a href="#sec-macro">환율·금리</a>
@@ -60,11 +59,6 @@
 <div class="tape-wrap"><div class="wrap tape" id="tape"></div></div>
 
 <main class="wrap">
-  <section id="sec-brief" class="sec brief-sec">
-    <div class="sec-h"><h2>모닝 브리핑</h2><span class="sub-l">전체 한줄 요약</span><span class="asof" id="asof-brief"></span><span class="cad" id="cad-brief" title="자동 업데이트 주기"></span></div>
-    <div class="card brief" id="briefBox"><div class="err">모닝 브리핑 불러오는 중…</div></div>
-  </section>
-
   <section id="sec-guide" class="sec">
     <div class="sec-h"><h2>오늘의 시장 체크</h2><span class="asof">지표로 자동 판정</span><span class="cad" title="자동 업데이트 주기">⟳ 월~금 하루 7번: 06:30 · 09:30 · 11:30 · 13:30 · 16:10 · 18:00 · 23:00</span></div>
     <div class="gd-sum" id="gdSummary"></div>
@@ -216,7 +210,7 @@
   <div class="disc sched">
     <b>자동 업데이트 시간표</b> <span class="muted">(한국시간 · GitHub 사정으로 5~20분 늦어질 수 있음)</span>
     <table>
-      <tr><th>06:30</th><td>월~토</td><td>미국장 마감 반영 (지수·해외 종목·환율·금리·일정·뉴스) + 모닝 브리핑 작성(하루 동안 고정)</td></tr>
+      <tr><th>06:30</th><td>월~토</td><td>미국장 마감 반영 (지수·해외 종목·환율·금리·일정·뉴스)</td></tr>
       <tr><th>09:30 · 11:30 · 13:30</th><td>월~금</td><td>국내 장중 (국내는 약 20분 지연 시세)</td></tr>
       <tr><th>16:10</th><td>월~금</td><td>국내 장 마감 (업종·종목 종가, 수급 잠정)</td></tr>
       <tr><th>18:00</th><td>월~금</td><td>국내 수급·공매도 확정치</td></tr>
@@ -240,14 +234,13 @@
 
 <div class="tip" id="tip"></div>
 <div class="modal" id="modal" aria-hidden="true"><div class="modal-box" id="modalBox" role="dialog"></div></div>
-<script src="assets/app.js?v=13"></script>
+<script src="assets/app.js?v=14"></script>
 <script src="assets/scan.js?v=5"></script>
 <script src="assets/guide.js?v=3"></script>
 <script src="assets/theme.js?v=1"></script>
-<script src="assets/brief.js?v=1"></script>
 <script src="assets/disclosure.js?v=1"></script>
-<script src="assets/mnav.js?v=1"></script>
-<script src="assets/stats.js?v=1"></script>
+<script src="assets/mnav.js?v=2"></script>
+<script src="assets/stats.js?v=2"></script>
 <script data-goatcounter="https://alonkorea.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

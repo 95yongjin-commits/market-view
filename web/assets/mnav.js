@@ -5,7 +5,6 @@
   function start() {
     const { $, esc } = window.MV;
     const TABS = [
-      ["☀", "브리핑", ["#sec-brief"]],
       ["📈", "시장", ["#sec-guide", "#sec-index", "#sec-macro", "#sec-cal"]],
       ["🧩", "섹터·종목", ["#sec-sector", "#sec-stocks", "#sec-vc", "#sec-theme"]],
       ["⚡", "시그널", ["#sec-scan", "#sec-flow", "#sec-ds", "#sec-news"]],

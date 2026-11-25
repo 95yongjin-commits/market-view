@@ -12,7 +12,6 @@
     if (!a) return;
     const h = a.getAttribute("href") || "";
     if (h.startsWith("#sec-") && where(a)) return send(`메뉴/${h.slice(5)}`, `${where(a)} · ${a.textContent.trim()}`);
-    if (a.classList.contains("bf")) return send(`브리핑/${h.slice(5)}`, `모닝 브리핑 · ${a.querySelector(".bf-k") ? a.querySelector(".bf-k").textContent : ""}`);
     if (a.classList.contains("th-card") && a.dataset.id) return send(`테마/${a.dataset.id}`, `신기술 테마 · ${a.dataset.id}`);
     if (a.classList.contains("ds")) return send("공시/원문", "주요 공시 원문 열기");
     if (a.classList.contains("lk")) return send("추천자료/열기", "추천 영상·자료 열기");

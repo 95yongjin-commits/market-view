@@ -582,24 +582,6 @@ b.lv-warm, .gd.lv-warm .gd-h b { color: #f5a524; }
 .side-top { font-size: 12px; color: var(--muted); padding: 10px 12px 0; border-top: 1px solid var(--line); margin-top: 10px; }
 .side-top:hover { color: var(--accent); }
 
-/* ── 모닝 브리핑 ─────────────────────────────────── */
-.brief-sec { padding-top: 26px; }
-.brief { padding: 6px 0; overflow: hidden; }
-.bf { display: grid; grid-template-columns: 26px 92px 1fr auto; align-items: baseline; gap: 10px; padding: 11px 18px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 14px; line-height: 1.55; }
-.bf:last-child { border-bottom: 0; }
-.bf:hover { background: var(--hover); }
-.bf:hover .bf-k { color: var(--accent); }
-.bf-i { font-size: 15px; }
-.bf-k { font-weight: 800; color: var(--ink); white-space: nowrap; }
-.bf-t b { font-weight: 700; font-variant-numeric: tabular-nums; }
-.bf-t em { font-style: normal; font-weight: 800; color: var(--ink); background: var(--accent-soft); border-radius: 4px; padding: 0 5px; }
-.bf-d { font-size: 11.5px; color: var(--faint); white-space: nowrap; }
-@media (max-width: 640px) {
-  .bf { grid-template-columns: 22px 1fr; gap: 2px 8px; padding: 10px 14px; }
-  .bf-t { grid-column: 1 / -1; font-size: 13.5px; }
-  .bf-d { display: none; }
-}
-.sec-h .sub-l { font-size: 13px; font-weight: 700; color: var(--accent); }
 
 /* ── 주요 공시 ─────────────────────────────────── */
 .ds-box { padding-top: 6px; }
