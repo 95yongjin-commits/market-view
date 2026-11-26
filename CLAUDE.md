@@ -14,7 +14,7 @@ PB용 사내 참고 시황 사이트. GitHub Pages(web/) + GitHub Actions 자동
 - 비밀값(KRX_ID/KRX_PW, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, DART_API_KEY)은 GitHub Secrets와 로컬 `.env`에만. 출력·커밋 금지.
 - 블룸버그·데이터가이드 등 유료 데이터 사용 금지. 신규 기능에 KRX는 가급적 쓰지 않는다.
 - 타사 리포트 원문·목표주가·추정치는 옮기지 않는다. 리포트 PDF는 다운로드 정보가 찍혀 있으므로 저장소에 절대 넣지 않는다.
-- 회사명(hanwha)이 들어간 도메인은 승인 전 사용 금지. 금융 섹터에서 한화투자증권은 제외.
+- 화면·코드에 회사명·소속·개인 이름을 넣지 않는다(2026-11-27 사용자 요청으로 모두 제거). 회사명이 들어간 도메인 금지.
 
 ## 구조
 - `scripts/collect.py`: 섹션별 수집(SECTIONS), `--only`, `--prev`(라이브 data URL 폴백) 지원. 결과는 `web/data/*.json`.

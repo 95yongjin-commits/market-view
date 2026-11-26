@@ -1,4 +1,4 @@
-/*! Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11 */
+/*! Daily Market View · 2026.11 */
 /* 데일리 마켓뷰 — data/*.json 을 읽어 화면을 그린다 (라이브러리 없음) */
 (function () {
   "use strict";
@@ -407,7 +407,7 @@
   /* ── 주요 일정 ─────────────────────────────────────── */
   const CAL = { week: 0 };
   const md = (iso) => { const d = new Date(iso + "T00:00:00"); return `${d.getMonth() + 1}/${d.getDate()} (${WD[d.getDay()]})`; };
-  /* WM지원팀이 정리한 이슈 일정(scripts/events_manual.json): 오늘 이후만, 날짜별 묶음 */
+  /* 정리한 이슈 일정(scripts/events_manual.json): 오늘 이후만, 날짜별 묶음 */
   const NOTE_CAT = { ipo: "상장·공모", policy: "정책·정치", ind: "산업·행사", macro: "해외 지표", earn: "해외 실적" };
   let notesAll = false;
   function renderNotes(c) {
@@ -543,27 +543,6 @@
     D.stocks_kr = kr; D.stocks_global = gl;
     renderStocks();
   });
-  /* 만든 사람 */
-  try {
-    console.log("%cDaily Market View%c\n기획·개발 김용진 · 한화투자증권 WM지원팀 · 2026.11",
-      "font:800 20px Pretendard,sans-serif;color:#f08a3c", "font:500 12px Pretendard,sans-serif;color:#868b96");
-  } catch (e) {}
-  (function () {
-    const mark = document.querySelector(".brand-mark");
-    if (!mark) return;
-    let n = 0, t = 0;
-    mark.addEventListener("click", () => {
-      n = Date.now() - t < 600 ? n + 1 : 1; t = Date.now();
-      if (n < 5) return;
-      n = 0;
-      const el = document.createElement("div");
-      el.className = "maker";
-      el.textContent = "만든 사람 · WM지원팀 김용진 대리 · 2026.11";
-      document.body.appendChild(el);
-      requestAnimationFrame(() => el.classList.add("show"));
-      setTimeout(() => { el.classList.remove("show"); setTimeout(() => el.remove(), 400); }, 2600);
-    });
-  })();
   window.MV = { D, $, esc, isN, cls, sgn, num, pct, spark, seg, showTip, hideTip, staleBadge, openModal, fmtPx, WD };
   document.dispatchEvent(new Event("mv:ready"));
   let rz;

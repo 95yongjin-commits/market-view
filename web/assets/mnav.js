@@ -1,4 +1,4 @@
-/*! Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11 */
+/*! Daily Market View · 2026.11 */
 /* 좁은 화면: 아래 탭 바(묶음별 첫 섹션으로 이동) + 헤더의 '현재 섹션' 표시 */
 (function () {
   "use strict";

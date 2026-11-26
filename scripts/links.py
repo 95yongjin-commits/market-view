@@ -1,4 +1,4 @@
-# Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11
+# Daily Market View · 2026.11
 """텔레그램 봇으로 받은 추천 링크(유튜브·웹)를 사이트에 게시한다.
 
     python scripts/links.py poll     # 봇에 새로 온 메시지 처리 → store/links.json 갱신
@@ -306,7 +306,7 @@ def handle(bot: Bot, st: dict, msg: dict, allowed: set[int]) -> bool:
         link = (URL_RE.findall(text) + ents or [None])[0]
         d = {"kind": "image", "imgs": [rel], "url": link, "title": comment[:60] or "사진",
              "comment": comment if len(comment) > 60 else None, "tags": tags, "posted": now,
-             "id": str(msg["message_id"]), "group": grp, "site": "WM지원팀"}
+             "id": str(msg["message_id"]), "group": grp, "site": ""}
         items.insert(0, {k: v for k, v in d.items() if v not in (None, "", [])})
         bot.say(chat, "🖼 사진을 올렸습니다." + (f" ({comment[:30]})" if comment else "") + "\n사이트 반영까지 몇 분 걸립니다.")
         return True

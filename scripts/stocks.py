@@ -1,4 +1,4 @@
-# Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11
+# Daily Market View · 2026.11
 """섹터별 종목 카드 데이터 (국내 WICS 중분류 / 글로벌 테마).
 
 collect.py 에서 섹션 'stocks_kr', 'stocks_global' 로 호출된다.

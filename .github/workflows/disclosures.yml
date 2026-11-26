@@ -1,4 +1,4 @@
-# Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11
+# Daily Market View · 2026.11
 # 주요 공시(DART)만 하루 3번 갱신(10:00·14:00·18:10 KST). 다른 섹션은 직전 배포본을 그대로 쓴다.
 # 정시 실행은 cron-job.org가 맡고, 아래 GitHub 예약은 예비.
 name: 주요 공시 갱신

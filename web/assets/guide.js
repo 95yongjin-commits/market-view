@@ -1,5 +1,5 @@
-/*! Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11 */
-/* 시황 가이드: ① 오늘의 시장 국면(자동 판정) + 볼 것·볼 곳  ② WM지원팀 추천 영상·링크(텔레그램 게시) */
+/*! Daily Market View · 2026.11 */
+/* 시황 가이드: ① 오늘의 시장 국면(자동 판정) + 볼 것·볼 곳  ② 추천 영상·링크(텔레그램 게시) */
 (function () {
   "use strict";
   function start() {
@@ -94,7 +94,7 @@
       if (tags.length) seg($("#lkTags"), [{ k: "", l: "전체" }, ...tags.map((t) => ({ k: t, l: "#" + esc(t) }))], L.tag, (k) => { L.tag = k; L.limit = 9; renderLinks(); });
       const rows = links.filter((x) => !L.tag || (x.tags || []).includes(L.tag));
       if (!rows.length) {
-        $("#lkGrid").innerHTML = `<div class="empty-s" style="padding:18px">아직 게시된 링크가 없습니다. WM지원팀이 추천 영상·자료를 올리면 여기에 표시됩니다.</div>`;
+        $("#lkGrid").innerHTML = `<div class="empty-s" style="padding:18px">아직 게시된 링크가 없습니다. 추천 영상·자료를 올리면 여기에 표시됩니다.</div>`;
         $("#lkMore").style.display = "none";
         return;
       }
@@ -123,7 +123,7 @@
       e.preventDefault();
       const x = links.find((q) => q.id === a.dataset.img);
       if (!x) return;
-      $("#modalBox").innerHTML = `<div class="m-h"><div><h3>${esc(x.title || "사진")}</h3><div class="s">WM지원팀 · ${esc(x.posted || "")}</div></div>
+      $("#modalBox").innerHTML = `<div class="m-h"><div><h3>${esc(x.title || "사진")}</h3><div class="s">${esc(x.posted || "")}</div></div>
         <button type="button" class="m-x" id="mClose">✕</button></div>
         ${x.comment ? `<p class="lk-c" style="margin:8px 0">${esc(x.comment)}</p>` : ""}
         <div class="lk-view">${x.imgs.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt=""></a>`).join("")}</div>

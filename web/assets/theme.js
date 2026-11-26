@@ -1,4 +1,4 @@
-/*! Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11 */
+/*! Daily Market View · 2026.11 */
 /* 신기술 테마: 카드 목록 → 상세(개요 / 관련 기업 / 흐름 / 리스크·체크) */
 (function () {
   "use strict";

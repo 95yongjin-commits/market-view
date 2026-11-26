@@ -1,4 +1,4 @@
-/*! Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11 */
+/*! Daily Market View · 2026.11 */
 /* 주요 공시 (DART): 분류 버튼 + 날짜별 목록, 처음 20건만 */
 (function () {
   "use strict";

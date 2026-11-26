@@ -1,4 +1,4 @@
-/*! Daily Market View · 기획·개발 김용진 (한화투자증권 WM지원팀) · 2026.11 */
+/*! Daily Market View · 2026.11 */
 /* ── 테마 토큰 ───────────────────────────────────────── */
 :root, html[data-theme="dark"] {
   --bg: #0b0c0f; --bg-2: #101217; --card: #14161b; --card-2: #1a1d23; --hover: #1f232a;
@@ -435,8 +435,6 @@ b.lv-warm, .gd.lv-warm .gd-h b { color: #f5a524; }
 .foot .disc li b { color: var(--ink-2); }
 .lk-view { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 .lk-view img { width: 100%; height: auto; border-radius: 8px; display: block; border: 1px solid var(--line); }
-.maker { position: fixed; left: 50%; top: 18px; transform: translate(-50%, -12px); opacity: 0; z-index: 99; background: var(--card); color: var(--ink); border: 1px solid var(--accent); border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25); transition: opacity .3s, transform .3s; pointer-events: none; }
-.maker.show { opacity: 1; transform: translate(-50%, 0); }
 
 .sec-h .cad { font-size: 11.5px; color: var(--faint); white-space: nowrap; }
 .foot .sched table { border-collapse: collapse; margin: 6px 0; font-size: 12px; }
