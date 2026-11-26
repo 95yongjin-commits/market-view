@@ -642,3 +642,9 @@ html { scroll-padding-top: 90px; }
   .mcur b { font-weight: 800; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .mcur .v { font-size: 11.5px; color: var(--muted); white-space: nowrap; }
 }
+
+/* ── 사내 한정 고지 (항상 보이게) ─────────────────────── */
+.notice-bar { margin: 16px 0 0; padding: 10px 14px; border-radius: 10px; font-size: 13.5px; line-height: 1.55; color: var(--ink);
+  border: 1px solid color-mix(in srgb, #e5484d 55%, transparent); background: color-mix(in srgb, #e5484d 10%, transparent); }
+.notice-bar b { color: #e5484d; }
+@media (max-width: 640px) { .notice-bar { font-size: 12.5px; padding: 9px 12px; } }
