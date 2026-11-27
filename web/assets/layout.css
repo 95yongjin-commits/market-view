@@ -1,0 +1,82 @@
+/* 새 화면 구성 (테스트) — layout.js 와 함께 쓴다. 색은 style.css 의 변수를 그대로 쓴다. */
+
+/* 글씨 크기: 화면 전체를 비율로 키운다 (기본 1, 크게 1.15, 아주 크게 1.3) */
+body.v2 .top, body.v2 .tape-wrap, body.v2 main, body.v2 .foot, body.v2 .modal-box, body.v2 .v2tab { zoom: var(--fz, 1); }
+
+/* 기존 메뉴(가로 메뉴·왼쪽 메뉴·휴대폰 서랍)는 탭으로 대체 */
+body.v2 #nav, body.v2 .side, body.v2 .side-open, body.v2 .side-dim, body.v2 #menuBtn { display: none !important; }
+body.v2.side-on { padding-left: 0; }
+body.v2 .v2-hide { display: none !important; }
+
+/* 위쪽 탭 */
+.v2nav { display: flex; gap: 4px; max-width: 1240px; margin: 0 auto; padding: 0 20px 10px; }
+.v2nav a { padding: 8px 16px; border-radius: 9px; font-size: 14.5px; font-weight: 700; color: var(--ink-2); cursor: pointer; }
+.v2nav a:hover { background: var(--hover); color: var(--ink); }
+.v2nav a.on { background: var(--accent-soft); color: var(--accent); }
+
+/* 글씨 크기 버튼 */
+.fs { display: inline-flex; flex: none; border: 1px solid var(--line-2); border-radius: 999px; overflow: hidden; margin: 0 8px 0 auto; vertical-align: middle; }
+body.v2 .theme-btn { flex: none; }
+.fs button { padding: 5px 10px; font-weight: 800; color: var(--ink-2); line-height: 1.2; }
+.fs button + button { border-left: 1px solid var(--line-2); }
+.fs button:hover { background: var(--hover); }
+.fs button.on { background: var(--accent); color: #fff; }
+.fs .fs0 { font-size: 12px; } .fs .fs1 { font-size: 14.5px; } .fs .fs2 { font-size: 17px; }
+
+/* 탭 화면 */
+.pane { display: none; } .pane.on { display: block; }
+.pane > .sec.sub { display: none; } .pane > .sec.sub.on { display: block; }
+.subtabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 6px; }
+.subtabs button { padding: 7px 14px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+.subtabs button:hover { color: var(--ink); background: var(--hover); }
+.subtabs button.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+/* 홈 */
+.hm-h { margin-top: 26px; }
+.hm-go { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--accent); cursor: pointer; }
+.hm-sum { font-size: 15px; line-height: 1.8; }
+.hm-sum .dot { color: var(--faint); margin: 0 8px; }
+.hm-idx { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+.hm-idx .idx-foot { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+.hm-sec { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hm-sec h4 { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.hb { display: grid; grid-template-columns: 110px 1fr 64px; align-items: center; gap: 10px; padding: 5px 0; font-size: 13.5px; }
+.hb .lb { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hb .tr { height: 10px; background: var(--card-2); border-radius: 5px; overflow: hidden; }
+.hb .tr i { display: block; height: 100%; border-radius: 5px; }
+.hb .tr i.up { background: var(--up); } .hb .tr i.down { background: var(--down); } .hb .tr i.flat { background: var(--flat); }
+.hb b { text-align: right; font-variant-numeric: tabular-nums; }
+#sec-home + #sec-cal { margin-top: 10px; }
+
+/* 섹터별 종목: 섹터당 5개만 */
+body.v2 #stBoard .sblk:not(.all) .sgrid .sc:nth-child(n+6) { display: none; }
+.v2more { margin-top: 10px; }
+
+/* 휴대폰·태블릿: 아래 탭 */
+.v2tab { display: none; }
+@media (max-width: 1240px) { .hm-idx { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 900px) {
+  .v2nav { display: none; }
+  .v2tab { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    background: var(--card); border-top: 1px solid var(--line); padding: 4px 0 calc(6px + env(safe-area-inset-bottom)); }
+  .v2tab a { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 4px 0; font-size: 11.5px; font-weight: 600; color: var(--muted); cursor: pointer; }
+  .v2tab a i { font-style: normal; font-size: 19px; line-height: 1.2; }
+  .v2tab a.on { color: var(--accent); }
+  body.v2 { padding-bottom: 70px; }
+  .hm-sec { grid-template-columns: 1fr; }
+  .subtabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+  .subtabs button { white-space: nowrap; flex: none; }
+  body.v2 .theme-lbl { display: none; }
+}
+@media (max-width: 640px) {
+  .hm-idx { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .hm-idx .idx { padding: 11px 12px 9px; }
+  .hm-idx .idx .v { font-size: 19px; }
+  .hb { grid-template-columns: 92px 1fr 58px; }
+  .fs { margin-right: 6px; }
+  .fs button { padding: 4px 7px; }
+  body.v2 .theme-btn { padding: 6px 9px; }
+  body.v2 .brand { min-width: 0; }
+  /* 아주 큰 글씨: 카드를 한 줄에 하나씩 */
+  html.fz2 .hm-idx, html.fz2 body.v2 .idx-grid, html.fz2 body.v2 .sgrid { grid-template-columns: 1fr; }
+}

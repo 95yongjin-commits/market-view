@@ -57,6 +57,11 @@ def make_test_page(web_dir: Path) -> None:
             '<script src="../assets/gate.js?v=1"></script>\n')
     html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n' + gate, 1)
     html = re.sub(r"<title>(.*?)</title>", r"<title>\1 (잠금 테스트)</title>", html, count=1)
+    # 새 화면 구성(탭) — 테스트 화면에만 적용
+    html = re.sub(r'(<link rel="stylesheet" href="\.\./assets/style\.css[^"]*">)',
+                  r'\1\n<link rel="stylesheet" href="../assets/layout.css?v=1">', html, count=1)
+    html = re.sub(r'<script src="\.\./assets/mnav\.js[^"]*"></script>\n?', "", html)
+    html = re.sub(r'(<script src="\.\./assets/app\.js)', r'<script src="../assets/layout.js?v=1"></script>\n\1', html, count=1)
     (web_dir / "test").mkdir(exist_ok=True)
     (web_dir / "test" / "index.html").write_text(html, encoding="utf-8")
 

@@ -18,7 +18,7 @@ PB용 사내 참고 시황 사이트. GitHub Pages(web/) + GitHub Actions 자동
 
 ## 구조
 - `scripts/collect.py`: 섹션별 수집(SECTIONS), `--only`, `--prev`(라이브 data URL 폴백) 지원. 결과는 `web/data/*.json`.
-- `scripts/scan.py`: 밸류체인·테마·차트 포착기 가격(yfinance). `scripts/disclosures.py`: DART 공시. `scripts/links.py`: 텔레그램 KIM봇(추천 링크·이슈 일정).
+- `scripts/scan.py`: 밸류체인·테마·차트 포착기 가격(yfinance). `scripts/disclosures.py`: DART 공시(시총 8,000억 이상). `scripts/links.py`: 텔레그램 KIM봇(추천 링크·이슈 일정).
 - `web/index.html` + `web/assets/*.js` (공용 헬퍼 `window.MV`). 정적 파일을 바꾸면 index.html의 `?v=` 번호를 올린다.
 - 워크플로: `update.yml`(시세), `disclosures.yml`(공시 10:00·14:00·18:10), `links.yml`(봇 30분마다). 모두 concurrency group `pages`.
 
@@ -27,6 +27,7 @@ PB용 사내 참고 시황 사이트. GitHub Pages(web/) + GitHub Actions 자동
 - `web/assets/gate.js`: 비밀번호 입력 화면 + data 요청을 가로채 enc 파일을 풀어서 돌려줌. 같은 탭에선 한 번만 입력(sessionStorage).
 - 현재: 본 사이트(`/`)는 잠금 없음, `/test/`만 잠금. 본 사이트 적용 시 평문 data 삭제 + `--prev` 폴백(평문 URL 의존)도 함께 바꿔야 함.
 - 비밀번호는 사용자가 매달 Secret에서 직접 변경.
+- 새 화면 구성(탭 4개: 홈·시장 데이터·섹터·종목·뉴스·공시, 글씨 크기 3단계)도 `/test/`에만 적용: seal.py가 테스트 화면에 `assets/layout.css`·`layout.js`를 넣고 `mnav.js`를 뺀다. layout.js는 기존 섹션(id 그대로)을 탭으로 옮기고 홈 블록을 그린다. 2026-11 회의 결정 반영(홈에서 판정 카드·추천 영상 제외, 섹터별 종목 5개+더 보기).
 
 ## 갱신 시각
 - GitHub 자체 예약 실행은 수 시간 지연·누락이 잦다 → 정시 실행은 cron-job.org가 workflow_dispatch로 호출, GitHub cron은 예비.

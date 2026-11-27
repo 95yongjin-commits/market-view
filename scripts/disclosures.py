@@ -1,7 +1,7 @@
 # Daily Market View · 2026.11
 """주요 공시 (금감원 DART 오픈API, 인증키 DART_API_KEY).
 
-- 대상: 사이트에 나오는 국내 종목(섹터별 종목·밸류체인·신기술 테마) + 시가총액 3,000억 이상
+- 대상: 시가총액 8,000억 이상 국내 종목
 - 종류: 수주·실적·자본·주주환원·지배구조·투자·거래 관련 공시만 (제목 기준)
 - 같은 날 같은 회사의 같은 공시(정정 포함)는 한 줄로 합친다
 """
@@ -16,7 +16,7 @@ import requests
 
 from collect import log, now_kst
 
-MIN_CAP = 3000  # 억원
+MIN_CAP = 8000  # 억원 (2026-11 회의: 3,000억 → 8,000억)
 CATS = [
     ("수주", r"단일판매|공급계약"),
     ("실적", r"영업\(잠정\)실적|매출액또는손익구조|잠정실적"),
@@ -28,30 +28,6 @@ CATS = [
 ]
 EXCL = (r"기업설명회|대규모기업집단|임원ㆍ주요주주|최대주주등소유주식|주식등의대량보유|증권발행실적|투자설명서|일괄신고"
         r"|주주명부폐쇄|미지정|결과보고서|발행결과|소송")
-
-
-def _site_codes(ctx: dict) -> set[str]:
-    acc: set[str] = set()
-
-    def walk(o):
-        if isinstance(o, dict):
-            t = o.get("ticker")
-            if isinstance(t, str) and len(t) == 6 and t.isdigit():
-                acc.add(t)
-            for v in o.values():
-                walk(v)
-        elif isinstance(o, list):
-            for v in o:
-                walk(v)
-    out = ctx.get("out")
-    for n in ("stocks_kr", "valuechain", "themes"):
-        try:
-            walk(json.loads((out / f"{n}.json").read_text(encoding="utf-8")))
-        except Exception:
-            d = ctx["load_prev"](n) if ctx.get("load_prev") else None
-            if d:
-                walk(d)
-    return acc
 
 
 def _clean_title(t: str) -> tuple[str, list[str]]:
@@ -76,7 +52,7 @@ def collect_disclosures(ctx: dict) -> dict:
         raise RuntimeError("DART_API_KEY 없음")
     from scan import kr_listing
     listing = kr_listing()
-    uni = _site_codes(ctx) | {c for c, v in listing.items() if v["cap"] >= MIN_CAP}
+    uni = {c for c, v in listing.items() if v["cap"] >= MIN_CAP}
     today = now_kst().date()
     rows, p = [], 1
     while True:
