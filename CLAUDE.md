@@ -22,12 +22,12 @@ PB용 사내 참고 시황 사이트. GitHub Pages(web/) + GitHub Actions 자동
 - `web/index.html` + `web/assets/*.js` (공용 헬퍼 `window.MV`). 정적 파일을 바꾸면 index.html의 `?v=` 번호를 올린다.
 - 워크플로: `update.yml`(시세), `disclosures.yml`(공시 10:00·14:00·18:10), `links.yml`(봇 30분마다). 모두 concurrency group `pages`.
 
-## 비밀번호 잠금 (테스트 단계, 2026-11)
-- `scripts/seal.py`: collect.py 마지막에 `web/data/*.json`을 GitHub Secret `SITE_PASSWORD`로 암호화 → `web/data/enc/`, 잠금 화면 `web/test/index.html` 생성. Secret 없으면 건너뜀.
-- `web/assets/gate.js`: 비밀번호 입력 화면 + data 요청을 가로채 enc 파일을 풀어서 돌려줌. 같은 탭에선 한 번만 입력(sessionStorage).
-- 현재: 본 사이트(`/`)는 잠금 없음, `/test/`만 잠금. 본 사이트 적용 시 평문 data 삭제 + `--prev` 폴백(평문 URL 의존)도 함께 바꿔야 함.
-- 비밀번호는 사용자가 매달 Secret에서 직접 변경.
-- 새 화면 구성(탭 4개: 홈·시장 데이터·섹터·종목·뉴스·공시, 글씨 크기 3단계)도 `/test/`에만 적용: seal.py가 테스트 화면에 `assets/layout.css`·`layout.js`를 넣고 `mnav.js`를 뺀다. layout.js는 기존 섹션(id 그대로)을 탭으로 옮기고 홈 블록을 그린다. 2026-11 회의 결정 반영(홈에서 판정 카드·추천 영상 제외, 섹터별 종목 5개+더 보기).
+## 비밀번호 잠금 · 화면 구성 (2026-11-27 본 사이트 적용)
+- `scripts/seal.py`: collect.py 마지막에 `web/data/*.json`을 GitHub Secret `SITE_PASSWORD`로 암호화 → `web/data/enc/`, **평문은 삭제**. Actions에서 Secret이 없거나 잠금이 실패하면 배포 중단(평문 노출 방지).
+- 직전 배포본은 `load_prev` → `seal.load_sealed()`로 풀어서 읽는다. 비밀번호를 막 바꾼 직후 부분 갱신(공시·링크)은 직전본을 못 읽으므로 배포하지 않고 끝남 → 다음 전체 갱신(update.yml)이 새 비밀번호로 다시 잠근다. 비밀번호 변경 뒤에는 '데이터 갱신 및 배포'를 수동 실행하라고 안내.
+- `web/assets/gate.js`: 비밀번호 입력 화면 + `data/*.json` 요청을 가로채 enc를 풀어서 돌려줌. 같은 탭에선 한 번만 입력(sessionStorage). 비밀번호는 사용자가 매달 Secret에서 직접 변경.
+- `web/assets/layout.js`·`layout.css`: 탭 4개(홈·시장 데이터·섹터·종목·뉴스·공시, 휴대폰은 아래 탭), 글씨 크기 3단계. 기존 섹션(id 그대로)을 탭으로 옮기고 홈 블록(한 줄 요약·대표 지수 6개·업종 강약 TOP5)을 그린다. 판정 카드(#sec-guide)는 숨김, 추천 영상은 뉴스·공시 탭 아래, 섹터별 종목은 섹터당 5개+더 보기. (mnav.js·왼쪽 메뉴는 이 구성으로 대체)
+- 공개 저장소이므로 코드·화면 틀은 보이고, 데이터 내용만 보호된다. `web/uploads/`(봇 게시 사진)는 잠기지 않음.
 
 ## 갱신 시각
 - GitHub 자체 예약 실행은 수 시간 지연·누락이 잦다 → 정시 실행은 cron-job.org가 workflow_dispatch로 호출, GitHub cron은 예비.

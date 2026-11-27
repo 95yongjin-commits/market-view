@@ -16,7 +16,7 @@ body.v2 .v2-hide { display: none !important; }
 
 /* 글씨 크기 버튼 */
 .fs { display: inline-flex; flex: none; border: 1px solid var(--line-2); border-radius: 999px; overflow: hidden; margin: 0 8px 0 auto; vertical-align: middle; }
-body.v2 .theme-btn { flex: none; }
+body.v2 .theme-btn, body.v2 .top-in .theme-btn { flex: none; margin-left: 0; }
 .fs button { padding: 5px 10px; font-weight: 800; color: var(--ink-2); line-height: 1.2; }
 .fs button + button { border-left: 1px solid var(--line-2); }
 .fs button:hover { background: var(--hover); }

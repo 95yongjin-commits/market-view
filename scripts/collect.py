@@ -597,8 +597,16 @@ SECTIONS = {
 
 
 def load_prev(prev: str | None, out: Path, name: str):
-    """직전 배포본(URL) 또는 로컬 파일에서 같은 섹션을 읽는다."""
+    """직전 배포본(URL) 또는 로컬 파일에서 같은 섹션을 읽는다.
+    배포본은 잠겨 있으므로(data/enc/) 비밀번호로 풀어서 읽고, 없으면 예전 평문 주소도 시도한다."""
     if prev:
+        try:
+            from seal import load_sealed
+            d = load_sealed(prev.rstrip("/"), name, lambda u: requests.get(u, headers=UA, timeout=10))
+            if d is not None:
+                return d
+        except Exception:
+            pass
         try:
             r = requests.get(f"{prev.rstrip('/')}/{name}.json", headers=UA, timeout=10)
             if r.ok:
@@ -631,7 +639,13 @@ def main():
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     CTX["load_prev"] = lambda name: load_prev(a.prev, out, name)
     CTX["out"] = out
-    meta = load_prev(a.prev, out, "meta") or {}
+    meta = load_prev(a.prev, out, "meta")
+    if a.only and a.prev and meta is None:
+        # 일부 섹션만 갱신하는데 직전 배포본을 못 읽으면(예: 비밀번호를 막 바꾼 직후) 나머지 섹션이 비게 된다
+        # → 배포하지 않고 끝낸다. 다음 전체 갱신이 새 비밀번호로 다시 잠근다.
+        log("✗ 직전 배포본을 읽지 못함(비밀번호 변경 직후일 수 있음) → 이번 부분 갱신은 배포하지 않음")
+        sys.exit(1)
+    meta = meta or {}
     meta.setdefault("sections", {})
     failed = []
     for name, fn in SECTIONS.items():
@@ -660,11 +674,12 @@ def main():
             log(f"✗ {name}: {e}")
     meta["updated"] = now_kst().strftime("%Y-%m-%d %H:%M")
     (out / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
-    try:   # 비밀번호 잠금 (SITE_PASSWORD 있을 때만)
+    try:   # 비밀번호 잠금: 데이터를 암호화하고 평문은 지운다. 실패하면 배포하지 않는다(평문 노출 방지).
         from seal import seal_site
         seal_site(out, log)
     except Exception as e:
-        log(f"✗ 잠금: {e}")
+        log(f"✗ 잠금 실패 → 배포 중단: {e}")
+        sys.exit(1)
     if len(failed) == len(SECTIONS):
         sys.exit(1)
 

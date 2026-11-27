@@ -25,7 +25,7 @@
     "#mvGate button{width:100%;margin-top:10px;padding:11px;border:0;border-radius:9px;font-size:15px;font-weight:600;" +
     "background:var(--accent,#f08a3c);color:#fff;cursor:pointer}" +
     "#mvGate button:disabled{opacity:.6;cursor:wait}" +
-    "#mvGate .err{min-height:18px;margin-top:10px;color:var(--up,#ff5b61);font-size:13px}";
+    "#mvGate .mv-err{min-height:18px;margin-top:10px;color:var(--up,#ff5b61);font-size:13px}";
   document.head.appendChild(css);
 
   function b64(s) { var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
@@ -61,9 +61,9 @@
       g.id = "mvGate";
       g.innerHTML = '<form autocomplete="off"><h2>마켓 브레이크</h2><p>사내 한정 자료입니다. 비밀번호를 입력하세요.</p>' +
         '<input type="password" placeholder="비밀번호" aria-label="비밀번호" autofocus>' +
-        '<button type="submit">들어가기</button><div class="err"></div></form>';
+        '<button type="submit">들어가기</button><div class="mv-err"></div></form>';
       document.body.appendChild(g);
-      var f = g.querySelector("form"), inp = g.querySelector("input"), btn = g.querySelector("button"), err = g.querySelector(".err");
+      var f = g.querySelector("form"), inp = g.querySelector("input"), btn = g.querySelector("button"), err = g.querySelector(".mv-err");
       if (msg) err.textContent = msg;
       inp.focus();
       f.addEventListener("submit", function (e) {
