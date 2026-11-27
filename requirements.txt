@@ -3,3 +3,4 @@ requests
 yfinance
 pykrx
 python-dotenv
+cryptography

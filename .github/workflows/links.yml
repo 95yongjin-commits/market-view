@@ -46,6 +46,8 @@ jobs:
           git pull --rebase -q && git push -q
       - name: 링크·일정 섹션만 갱신 (나머지는 직전 배포본 유지)
         if: steps.poll.outputs.changed == 'true'
+        env:
+          SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
         run: |
           pip install -q -r requirements.txt
           python scripts/collect.py --out web/data --only links calendar --prev "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data"

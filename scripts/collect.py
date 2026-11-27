@@ -660,6 +660,11 @@ def main():
             log(f"✗ {name}: {e}")
     meta["updated"] = now_kst().strftime("%Y-%m-%d %H:%M")
     (out / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
+    try:   # 비밀번호 잠금 (SITE_PASSWORD 있을 때만)
+        from seal import seal_site
+        seal_site(out, log)
+    except Exception as e:
+        log(f"✗ 잠금: {e}")
     if len(failed) == len(SECTIONS):
         sys.exit(1)
 

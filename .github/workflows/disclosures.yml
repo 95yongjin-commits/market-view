@@ -34,6 +34,7 @@ jobs:
       - name: 공시만 갱신 (나머지는 직전 배포본 유지)
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
         run: python scripts/collect.py --out web/data --only disclosures --prev "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

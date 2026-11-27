@@ -22,6 +22,12 @@ PB용 사내 참고 시황 사이트. GitHub Pages(web/) + GitHub Actions 자동
 - `web/index.html` + `web/assets/*.js` (공용 헬퍼 `window.MV`). 정적 파일을 바꾸면 index.html의 `?v=` 번호를 올린다.
 - 워크플로: `update.yml`(시세), `disclosures.yml`(공시 10:00·14:00·18:10), `links.yml`(봇 30분마다). 모두 concurrency group `pages`.
 
+## 비밀번호 잠금 (테스트 단계, 2026-11)
+- `scripts/seal.py`: collect.py 마지막에 `web/data/*.json`을 GitHub Secret `SITE_PASSWORD`로 암호화 → `web/data/enc/`, 잠금 화면 `web/test/index.html` 생성. Secret 없으면 건너뜀.
+- `web/assets/gate.js`: 비밀번호 입력 화면 + data 요청을 가로채 enc 파일을 풀어서 돌려줌. 같은 탭에선 한 번만 입력(sessionStorage).
+- 현재: 본 사이트(`/`)는 잠금 없음, `/test/`만 잠금. 본 사이트 적용 시 평문 data 삭제 + `--prev` 폴백(평문 URL 의존)도 함께 바꿔야 함.
+- 비밀번호는 사용자가 매달 Secret에서 직접 변경.
+
 ## 갱신 시각
 - GitHub 자체 예약 실행은 수 시간 지연·누락이 잦다 → 정시 실행은 cron-job.org가 workflow_dispatch로 호출, GitHub cron은 예비.
 - 현재 cron-job.org: 평일 06:20·07:00 update.yml (목표: 07:30까지 데이터 준비, 08시 회의용).
