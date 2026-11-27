@@ -21,11 +21,9 @@
   const panes = {};
   TABS.forEach((t) => { panes[t.k] = el("div", "pane"); panes[t.k].dataset.p = t.k; main.appendChild(panes[t.k]); });
 
-  // 홈: 한 줄 요약 · 대표 지수 6개 · 섹터 강세/약세 · 일정
+  // 홈: (오늘의 시장 체크) · 대표 지수 6개 · 섹터 강세/약세 · 일정
   const home = el("section", "sec", `
-    <div class="sec-h"><h2>오늘의 시장</h2><span class="asof" id="hmAsof"></span></div>
-    <div class="card hm-sum" id="hmSum">불러오는 중…</div>
-    <div class="sec-h hm-h"><h2>주요 지수</h2><span class="asof">각 시장 최근 종가</span><a class="hm-go" data-go="mkt">전체 지수·환율·금리 →</a></div>
+    <div class="sec-h"><h2>주요 지수</h2><span class="asof" id="hmAsof">각 시장 최근 종가</span><a class="hm-go" data-go="mkt">전체 지수·환율·금리 →</a></div>
     <div class="hm-idx" id="hmIdx"></div>
     <div class="sec-h hm-h"><h2>업종 강세 · 약세</h2><span class="asof" id="hmSecAsof"></span><a class="hm-go" data-go="sec" data-sub="sec-sector">섹터 전체 →</a></div>
     <div class="hm-sec" id="hmSec"></div>`);
@@ -55,14 +53,9 @@
   const lkHint = [...guide.querySelectorAll(".hint")].pop();
   if (lkHint) lk.appendChild(lkHint);
   panes.news.appendChild(lk);
-  if (window.MV_GUIDE_HOME) {
-    // 테스트: '오늘의 시장 체크' 판정 카드를 홈 맨 위에 (추천 영상 제목줄은 빼고)
-    guide.querySelectorAll(".sec-h").forEach((h, i) => { if (i > 0) h.remove(); });
-    panes.home.insertBefore(guide, home);
-  } else {
-    guide.classList.add("v2-hide"); // 지표 판정 카드는 새 구성에서 뺀다 (요소는 남겨 두어 기존 코드 오류 방지)
-    main.appendChild(guide);
-  }
+  // '오늘의 시장 체크' 판정 카드는 홈 맨 위에 (추천 영상 제목줄은 빼고)
+  guide.querySelectorAll(".sec-h").forEach((h, i) => { if (i > 0) h.remove(); });
+  panes.home.insertBefore(guide, home);
 
   /* ── 헤더: 탭 · 글씨 크기 / 휴대폰: 아래 탭 ───────────── */
   const tabHtml = (mob) => TABS.map((t) => `<a data-go="${t.k}">${mob ? `<i>${t.i}</i>${t.s || t.l}` : t.l}</a>`).join("");
@@ -168,17 +161,7 @@
       ? `<div class="card"><h4>강세 TOP 5</h4>${rows.slice(0, 5).map(bar).join("")}</div><div class="card"><h4>약세 TOP 5</h4>${rows.slice(-5).reverse().map(bar).join("")}</div>`
       : `<div class="err">업종 데이터를 불러오지 못했습니다.</div>`;
 
-    // 한 줄 요약: 판정 없이 숫자만
-    const parts = [];
-    const nq = find(idx, "ticker", "^IXIC");
-    if (nq) parts.push(`美 나스닥 <b class="${cls(nq.pct)}">${pct(nq.pct)}</b>`);
-    const fx = r && find(r.fx, "code", "FX_USDKRW");
-    if (fx) parts.push(`원/달러 <b>${num(fx.last, 1)}</b> <span class="${cls(fx.pct)}">(${pct(fx.pct)})</span>`);
-    const fl = k && k.flow && k.flow.KOSPI;
-    if (fl && fl.length >= 5) { const s5 = fl.slice(-5).reduce((a, x) => a + (x["외국인"] || 0), 0); parts.push(`코스피 외국인 5일 <b class="${cls(s5)}">${s5 > 0 ? "+" : ""}${num(s5 / 10000, 2)}조</b>`); }
-    if (rows.length) parts.push(`강세 업종 <b>${esc(rows[0].sector)}</b> · 약세 업종 <b>${esc(rows[rows.length - 1].sector)}</b>`);
-    $("#hmSum").innerHTML = parts.length ? parts.join('<span class="dot">·</span>') : "데이터를 불러오지 못했습니다.";
-    $("#hmAsof").textContent = g && g.updated ? `갱신 ${g.updated}` : "";
+    if (g && g.updated) $("#hmAsof").textContent = `각 시장 최근 종가 · 갱신 ${g.updated}`;
   }
   function homeLater() {
     Promise.all(["global", "rates", "korea"].map(get)).then(([g, r, k]) => {

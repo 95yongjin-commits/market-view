@@ -33,6 +33,7 @@ body.v2 .theme-btn, body.v2 .top-in .theme-btn { flex: none; margin-left: 0; }
 
 /* 홈 */
 .hm-h { margin-top: 26px; }
+#sec-guide + #sec-home { margin-top: 10px; }
 .hm-go { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--accent); cursor: pointer; }
 .hm-sum { font-size: 15px; line-height: 1.8; }
 .hm-sum .dot { color: var(--faint); margin: 0 8px; }
@@ -77,6 +78,7 @@ body.v2 #stBoard .sblk:not(.all) .sgrid .sc:nth-child(n+6) { display: none; }
   .fs button { padding: 4px 7px; }
   body.v2 .theme-btn { padding: 6px 9px; }
   body.v2 .brand { min-width: 0; }
+  body.v2 .gd-grid { grid-template-columns: 1fr; }
   /* 아주 큰 글씨: 카드를 한 줄에 하나씩 */
   html.fz2 .hm-idx, html.fz2 body.v2 .idx-grid, html.fz2 body.v2 .sgrid { grid-template-columns: 1fr; }
 }
