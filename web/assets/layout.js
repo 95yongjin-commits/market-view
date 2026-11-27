@@ -55,8 +55,14 @@
   const lkHint = [...guide.querySelectorAll(".hint")].pop();
   if (lkHint) lk.appendChild(lkHint);
   panes.news.appendChild(lk);
-  guide.classList.add("v2-hide"); // 지표 판정 카드는 새 구성에서 뺀다 (요소는 남겨 두어 기존 코드 오류 방지)
-  main.appendChild(guide);
+  if (window.MV_GUIDE_HOME) {
+    // 테스트: '오늘의 시장 체크' 판정 카드를 홈 맨 위에 (추천 영상 제목줄은 빼고)
+    guide.querySelectorAll(".sec-h").forEach((h, i) => { if (i > 0) h.remove(); });
+    panes.home.insertBefore(guide, home);
+  } else {
+    guide.classList.add("v2-hide"); // 지표 판정 카드는 새 구성에서 뺀다 (요소는 남겨 두어 기존 코드 오류 방지)
+    main.appendChild(guide);
+  }
 
   /* ── 헤더: 탭 · 글씨 크기 / 휴대폰: 아래 탭 ───────────── */
   const tabHtml = (mob) => TABS.map((t) => `<a data-go="${t.k}">${mob ? `<i>${t.i}</i>${t.s || t.l}` : t.l}</a>`).join("");
